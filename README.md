@@ -14,7 +14,7 @@
 ## Технологии
 
 - **Backend**: C#, .NET8, ASP.NET Core
-- **Database**: MS SQL Server
+- **Database**: MS SQL Server, MongoDB, PostgreSQL
 - **Frontend**: React
 
 ## Команда разработки
