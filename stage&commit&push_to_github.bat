@@ -1,4 +1,6 @@
+git pull
+pause
 git add .
-git commit -m "Repository structural changes"
+git commit -m "Update"
 git push origin main
 pause
