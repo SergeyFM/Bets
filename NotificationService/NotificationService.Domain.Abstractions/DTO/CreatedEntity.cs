@@ -1,9 +1,9 @@
-﻿namespace NotificationService.Domain.Abstractions
+﻿namespace NotificationService.Domain.Abstractions.DTO
 {
     /// <summary>
     /// Базовая сущность с информацией о создании
     /// </summary>
-    public class BaseCreatedEntity : BaseEntity
+    public class CreatedEntity : IdentifiableEntity, IEntity
     {
         /// <summary>
         /// Дата создания

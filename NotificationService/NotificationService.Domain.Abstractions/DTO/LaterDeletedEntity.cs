@@ -1,9 +1,9 @@
-﻿namespace NotificationService.Domain.Abstractions
+﻿namespace NotificationService.Domain.Abstractions.DTO
 {
     /// <summary>
     /// Базовая сущность, поддерживающая отложенное удаление
     /// </summary>
-    public class BaseLaterDeletedEntity : BaseModifiableEntity
+    public class LaterDeletedEntity : ModifiableEntity, IEntity
     {
         /// <summary>
         /// Дата удаления

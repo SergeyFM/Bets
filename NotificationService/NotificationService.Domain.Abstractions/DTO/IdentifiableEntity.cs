@@ -1,9 +1,9 @@
-﻿namespace NotificationService.Domain.Abstractions
+﻿namespace NotificationService.Domain.Abstractions.DTO
 {
     /// <summary>
     /// Базовая сущность с идентификатором типа Guid
     /// </summary>
-    public class BaseEntity
+    public class IdentifiableEntity : IEntity
     {
         /// <summary>
         /// Идентификатор

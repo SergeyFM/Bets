@@ -1,9 +1,9 @@
-﻿namespace NotificationService.Domain.Abstractions
+﻿namespace NotificationService.Domain.Abstractions.DTO
 {
     /// <summary>
     /// Базовая сущность с информацией последней модификации 
     /// </summary>
-    public class BaseModifiableEntity : BaseCreatedEntity
+    public class ModifiableEntity : CreatedEntity, IEntity
     {
         /// <summary>
         /// Дата последнего изменения
