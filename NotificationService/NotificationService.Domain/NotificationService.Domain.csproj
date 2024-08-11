@@ -10,4 +10,8 @@
     <ProjectReference Include="..\NotificationService.Domain.Abstractions\NotificationService.Domain.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Settings\" />
+  </ItemGroup>
+
 </Project>
