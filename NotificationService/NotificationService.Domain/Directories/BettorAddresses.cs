@@ -25,7 +25,7 @@ namespace NotificationService.Domain.Directories
         /// <summary>
         /// Идентификатор игрока
         /// </summary>
-        public int BettorsId { get; set; }
+        public Guid BettorsId { get; set; }
 
         /// <summary>
         /// Игрок
@@ -35,7 +35,7 @@ namespace NotificationService.Domain.Directories
         /// <summary>
         /// Идентификатор мессенджера
         /// </summary>
-        public int MessengersId { get; set; }
+        public Guid MessengersId { get; set; }
 
         /// <summary>
         /// Мессенджер
