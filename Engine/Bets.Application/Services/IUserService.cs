@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bets.Core.Models;
 
-namespace Bets.Application;
+namespace Bets.Application.Services;
 public interface IUserService {
     Task<User> GetUserByIdAsync(Guid userId);
     Task<IEnumerable<User>> GetUsersByRoleAsync(string role);

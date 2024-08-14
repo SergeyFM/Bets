@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bets.Application\Bets.Application.csproj" />
+    <ProjectReference Include="..\Bets.Core\Bets.Core.csproj" />
+  </ItemGroup>
+
 </Project>
