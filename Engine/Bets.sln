@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bets.Api", "Bets.Api\Bets.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bets.Tests", "Bets.Tests\Bets.Tests.csproj", "{8207D5D8-8A5A-4D29-BE82-2AD4BCBDC2CC}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Bets.UI", "Bets.UI\Bets.UI.esproj", "{5253D3C6-A939-4589-9411-3014AAD64937}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{8207D5D8-8A5A-4D29-BE82-2AD4BCBDC2CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8207D5D8-8A5A-4D29-BE82-2AD4BCBDC2CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8207D5D8-8A5A-4D29-BE82-2AD4BCBDC2CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5253D3C6-A939-4589-9411-3014AAD64937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5253D3C6-A939-4589-9411-3014AAD64937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5253D3C6-A939-4589-9411-3014AAD64937}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5253D3C6-A939-4589-9411-3014AAD64937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5253D3C6-A939-4589-9411-3014AAD64937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5253D3C6-A939-4589-9411-3014AAD64937}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
