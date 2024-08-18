@@ -3,7 +3,7 @@
     /// <summary>
     /// Базовая сущность с идентификатором типа Guid
     /// </summary>
-    public class IdentifiableEntity : IEntity
+    public abstract class IdentifiableEntity : IEntity
     {
         /// <summary>
         /// Идентификатор

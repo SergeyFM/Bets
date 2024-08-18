@@ -3,7 +3,7 @@
     /// <summary>
     /// Базовая сущность, поддерживающая отложенное удаление
     /// </summary>
-    public class LaterDeletedEntity : ModifiableEntity, IEntity
+    public abstract class LaterDeletedEntity : ModifiableEntity, IEntity
     {
         /// <summary>
         /// Дата удаления

@@ -3,7 +3,7 @@
     /// <summary>
     /// Базовая сущность с информацией о создании
     /// </summary>
-    public class CreatedEntity : IdentifiableEntity, IEntity
+    public abstract class CreatedEntity : IdentifiableEntity, IEntity
     {
         /// <summary>
         /// Дата создания

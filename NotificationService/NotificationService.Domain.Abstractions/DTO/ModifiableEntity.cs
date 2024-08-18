@@ -3,7 +3,7 @@
     /// <summary>
     /// Базовая сущность с информацией последней модификации 
     /// </summary>
-    public class ModifiableEntity : CreatedEntity, IEntity
+    public abstract class ModifiableEntity : CreatedEntity, IEntity
     {
         /// <summary>
         /// Дата последнего изменения

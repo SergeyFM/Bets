@@ -9,8 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationService.DataAccess\NotificationService.DataAccess.csproj" />
+    <ProjectReference Include="..\NotificationService.Models\NotificationService.Models.csproj" />
+    <ProjectReference Include="..\NotificationService.Services\NotificationService.Services.csproj" />
   </ItemGroup>
 
 </Project>
