@@ -1,5 +1,7 @@
 using NotificationService.Services.Helpers;
 using NotificationService.Api.Helpers;
+using NotificationService.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,5 +32,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
