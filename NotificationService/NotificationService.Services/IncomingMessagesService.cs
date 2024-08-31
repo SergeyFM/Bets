@@ -45,5 +45,20 @@ namespace NotificationService.Services
                 throw new Exception(ex.ToString());
             }
         }
+
+        public async Task<List<IncomingMessageResponse>> GetListMessagesAsync()
+        {
+            try
+            {
+                var response = await _repository.GetAllAsync();
+
+                return _mapper.Map<List<IncomingMessageResponse>>(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[IncomingMessagesService][GetListMessagesAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
     }
 }

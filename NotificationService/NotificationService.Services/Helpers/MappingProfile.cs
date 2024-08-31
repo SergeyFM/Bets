@@ -10,7 +10,8 @@ namespace NotificationService.Services.Helpers
         {
             CreateMap<IncomingMessageRequest, IncomingMessages>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
-            //.ForMember(nameof(IncomingMessages.Id), o => Guid.NewGuid());
+
+            CreateMap<IncomingMessages, IncomingMessageResponse>();
         }
     }
 }
