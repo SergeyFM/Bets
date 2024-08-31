@@ -20,6 +20,7 @@ namespace NotificationService.Api.Helpers
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
             services
                 .AddScoped<IncomingMessagesService>()
+                .AddScoped<MessengersService>()
                 .AddScoped<DbContext, DatabaseContext>();
 
             return services;

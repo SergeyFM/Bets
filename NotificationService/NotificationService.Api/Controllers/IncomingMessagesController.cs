@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NotificationService.Models;
 using NotificationService.Services;
 
@@ -23,7 +22,7 @@ namespace NotificationService.Api.Controllers
         /// Добавить сообщение в систему
         /// </summary>
         /// <param name="request">Данные сообщения</param>
-        /// <param name="ct"></param>
+        /// <param name="ct">CancellationToken</param>
         /// <returns>Идентификатор добавленного сообщения</returns>
         [HttpPost]
         public async Task<IActionResult> AddMessageAsync([FromBody] IncomingMessageRequest request
@@ -41,6 +40,10 @@ namespace NotificationService.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение списка всех входящих сообщений
+        /// </summary>
+        /// <returns>List of IncomingMessageResponse</returns>
         [HttpGet]
         public async Task<IActionResult> GetListMessagesAsync()
         {
