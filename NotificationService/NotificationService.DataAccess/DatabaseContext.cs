@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore;
 using NotificationService.Domain;
+using NotificationService.Domain.Directories;
 
 namespace NotificationService.DataAccess
 {
@@ -13,19 +14,13 @@ namespace NotificationService.DataAccess
         }
 
         public DbSet<IncomingMessages> IncomingMessages { get; set; }
+        public DbSet<Messengers> Messengers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             IncomingMessagesModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<Customer>()
-            //    .HasMany(c => c.Promocodes)
-            //    .WithOne(p => p.Customer);
-
-            //modelBuilder.Entity<Preference>()
-            //        .HasMany(p => p.Customers)
-            //        .WithMany(c => c.Preferences);
+            MessengersModelCreating(modelBuilder);
         }
 
         private void IncomingMessagesModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +34,18 @@ namespace NotificationService.DataAccess
                 .HasMaxLength(1000);
             modelBuilder.Entity<IncomingMessages>().Property(b => b.CreatedBy).IsRequired()
                 .HasMaxLength(60);
+        }
+
+        private void MessengersModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Messengers>().HasKey(e => e.Id);
+
+            modelBuilder.Entity<Messengers>().Property(b => b.Name).IsRequired()
+                .HasMaxLength(100);
+            modelBuilder.Entity<Messengers>().Property(b => b.CreatedBy).IsRequired()
+                .HasMaxLength(60);
+            modelBuilder.Entity<Messengers>().Property(b => b.ModifiedBy).HasMaxLength(60);
+            modelBuilder.Entity<Messengers>().Property(b => b.DeletedBy).HasMaxLength(60);
         }
     }
 }
