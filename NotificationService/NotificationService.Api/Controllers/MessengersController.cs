@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
 using NotificationService.Models;
 using NotificationService.Services;
 using System.ComponentModel.DataAnnotations;
@@ -103,6 +104,11 @@ namespace NotificationService.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление записи
+        /// </summary>
+        /// <param name="request">Идентификатор записи и кто удаляет</param>
+        /// <returns>NoContent</returns>
         [HttpPost]
         [Route("delete")]
         public async Task<IActionResult> DeleteMessengerAsync([FromBody] DeleteMessengerRequest request)
@@ -111,6 +117,22 @@ namespace NotificationService.Api.Controllers
             {
                 await _service.DeleteMessengerAsync(request);
                 return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("delete/list")]
+        public async Task<IActionResult> DeleteListMessengersAsync([FromBody] DeleteListRequest request)
+        {
+            try
+            {
+                var deletedCount = await _service.DeleteListMessengersAsync(request);
+                return Ok(deletedCount);
             }
             catch (Exception ex)
             {

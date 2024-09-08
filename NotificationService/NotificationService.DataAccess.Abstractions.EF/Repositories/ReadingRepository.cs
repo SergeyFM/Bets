@@ -46,7 +46,7 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         /// Получение списка сущностей по идентификаторам
         /// </summary>
         /// <param name="ids">Идентификаторы сущностей</param>
-        public async Task<List<T>> GetListByIdsAsync(IEnumerable<Guid> ids)
+        public virtual async Task<List<T>> GetListByIdsAsync(IEnumerable<Guid> ids)
         {
             return await _entitySet.Where(x => ids.Contains(x.Id)).ToListAsync();
         }

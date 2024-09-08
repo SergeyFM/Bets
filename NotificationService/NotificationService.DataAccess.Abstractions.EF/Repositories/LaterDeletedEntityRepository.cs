@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotificationService.Domain.Abstractions.DTO;
 using NotificationService.Domain.Abstractions.Repositories.Interfaces;
+using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
 
 namespace NotificationService.DataAccess.Abstractions.EF.Repositories
 {
@@ -26,7 +27,7 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         /// </summary>
         /// <param name="entity">Удаляемая сущность</param>
         /// <returns></returns>
-        public virtual async Task DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity)
         {
             entity.DeletedDate = DateTime.Now;
             _entitySet.Update(entity);
@@ -36,19 +37,12 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         /// <summary>
         /// Помечает несколько сущностей для удаления
         /// </summary>
-        /// <param name="id">Идентификаторы удаляемых объектов</param>
-        public virtual async Task DeleteRangeAsync(IEnumerable<Guid> ids)
+        /// <param name="id">Идентификаторы удаляемых объектов и кем удаляются</param>
+        public async Task<int> DeleteRangeAsync(DeleteListRequest request)
         {
-            var entities = await GetListByIdsAsync(ids);
-            if (entities != null && entities.Count > 0)
-            {
-                foreach (var entity in entities)
-                {
-                    entity.DeletedDate = DateTime.Now;
-                }
-                _entitySet.UpdateRange(entities);
-                await _dbContext.SaveChangesAsync();
-            }
+            var deletedCount = await _entitySet.Where(x => request.Ids.Contains(x.Id) && x.DeletedDate == null)
+                .ExecuteUpdateAsync(u => u.SetProperty(p => p.DeletedDate, DateTime.Now).SetProperty(p => p.DeletedBy, request.DeletedBy));
+            return deletedCount;   
         }
 
         /// <summary>
@@ -66,6 +60,15 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         public override async Task<List<T>> GetAllAsync()
         {
             return await _entitySet.Where(x => x.DeletedDate == null).ToListAsync();
+        }
+
+        /// <summary>
+        /// Получение списка сущностей по идентификаторам
+        /// </summary>
+        /// <param name="ids">Идентификаторы сущностей</param>
+        public override async Task<List<T>> GetListByIdsAsync(IEnumerable<Guid> ids)
+        {
+            return await _entitySet.Where(x => ids.Contains(x.Id) && x.DeletedDate == null).ToListAsync();
         }
     }
 }

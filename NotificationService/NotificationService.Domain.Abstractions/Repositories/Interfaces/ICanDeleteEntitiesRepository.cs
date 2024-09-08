@@ -1,4 +1,5 @@
 ﻿using NotificationService.Domain.Abstractions.DTO;
+using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
 
 namespace NotificationService.Domain.Abstractions.Repositories.Interfaces
 {
@@ -25,6 +26,6 @@ namespace NotificationService.Domain.Abstractions.Repositories.Interfaces
         /// <remarks>
         /// Возможна реализация с отложенным удалением
         /// </remarks>
-        Task DeleteRangeAsync(IEnumerable<Guid> ids);
+        Task<int> DeleteRangeAsync(DeleteListRequest request);
     }
 }

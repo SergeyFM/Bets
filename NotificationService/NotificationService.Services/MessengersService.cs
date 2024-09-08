@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 using NotificationService.Domain.Directories;
 using NotificationService.Services.Exceptions;
+using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
 
 namespace NotificationService.Services
 {
@@ -139,6 +140,29 @@ namespace NotificationService.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"[MessengersService][DeleteMessengerAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<int> DeleteListMessengersAsync(DeleteListRequest request)
+        {
+            if (request == null)
+            {
+                var msg = "attempt to transmit a messenger without data";
+                var ex = new ArgumentNullException(nameof(request), msg);
+                _logger.LogError(ex, $"[MessengersService][DeleteListMessengersAsync] ArgumentNullException: {msg}");
+                throw ex;
+            }
+
+            try
+            {
+                var deletedCount = await _repository.DeleteRangeAsync(request);
+
+                return deletedCount;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[MessengersService][DeleteListMessengersAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
