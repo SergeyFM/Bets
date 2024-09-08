@@ -81,5 +81,37 @@ namespace NotificationService.Services
                 throw new Exception(ex.ToString());
             }
         }
+
+        public async Task<MessengerResponse> UpdateMessengerAsync(UpdateMessengerRequest request)
+        {
+            if (request == null)
+            {
+                var msg = "attempt to transmit a messenger without data";
+                var ex = new ArgumentNullException(nameof(request), msg);
+                _logger.LogError(ex, $"[MessengersService][UpdateMessengerAsync] ArgumentNullException: {msg}");
+                throw ex;
+            }
+
+            try
+            {
+                var response = await _repository.GetByIdAsync(request.Id);
+                if (response == null)
+                {
+                    throw new NotFoundException($"Мессенджер с идентификатором {request.Id} не найден.");
+                }
+
+                response.Name = request.Name;
+                response.ModifiedBy = request.ModifiedBy;
+
+                await _repository.UpdateAsync(response);
+
+                return _mapper.Map<MessengerResponse>(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[MessengersService][UpdateMessengerAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
     }
 }

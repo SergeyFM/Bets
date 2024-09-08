@@ -42,6 +42,11 @@ namespace NotificationService.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение мессенджера по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор мессенджера</param>
+        /// <returns>MessengerResponse</returns>
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetMessengerAsync([FromRoute] Guid id)
@@ -61,13 +66,29 @@ namespace NotificationService.Api.Controllers
         /// <summary>
         /// Получение списка всех входящих сообщений
         /// </summary>
-        /// <returns>List of IncomingMessageResponse</returns>
+        /// <returns>List of MessengerResponse</returns>
         [HttpGet]
-        public async Task<IActionResult> GetListMessagesAsync()
+        public async Task<IActionResult> GetListMessengersAsync()
         {
             try
             {
                 var result = await _service.GetListMessengersAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateMessengerAsync([FromBody] UpdateMessengerRequest request)
+        {
+            try
+            {
+                var result = await _service.UpdateMessengerAsync(request);
                 return Ok(result);
             }
             catch (Exception ex)
