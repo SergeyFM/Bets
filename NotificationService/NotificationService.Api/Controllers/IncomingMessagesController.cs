@@ -25,6 +25,7 @@ namespace NotificationService.Api.Controllers
         /// <param name="ct">CancellationToken</param>
         /// <returns>Идентификатор добавленного сообщения</returns>
         [HttpPost]
+        [Route("create")]
         public async Task<IActionResult> AddMessageAsync([FromBody] IncomingMessageRequest request
             , CancellationToken ct)
         {

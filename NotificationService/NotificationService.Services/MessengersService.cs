@@ -4,6 +4,7 @@ using NotificationService.Domain;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using NotificationService.Domain.Directories;
+using NotificationService.Services.Exceptions;
 
 namespace NotificationService.Services
 {
@@ -43,6 +44,40 @@ namespace NotificationService.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"[MessengersService][AddMessengerAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<MessengerResponse> GetMessengerAsync(Guid id)
+        {
+            try
+            {
+                var response = await _repository.GetByIdAsync(id);
+                if (response == null)
+                {
+                    throw new NotFoundException($"Мессенджер с идентификатором {id} не найден.");
+                }
+
+                return _mapper.Map<MessengerResponse>(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[MessengersService][GetMessengerAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<List<MessengerResponse>> GetListMessengersAsync()
+        {
+            try
+            {
+                var response = await _repository.GetAllAsync();
+
+                return _mapper.Map<List<MessengerResponse>>(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[MessengersService][GetListMessengersAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }

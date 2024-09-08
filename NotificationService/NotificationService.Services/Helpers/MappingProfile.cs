@@ -15,6 +15,7 @@ namespace NotificationService.Services.Helpers
 
             CreateMap<MessengerRequest, Messengers>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
+            CreateMap<Messengers, MessengerResponse>();
         }
     }
 }
