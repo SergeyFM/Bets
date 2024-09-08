@@ -29,7 +29,7 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         /// Получение сущности по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор сущности</param>
-        public async Task<T?> GetByIdAsync(Guid id)
+        public virtual async Task<T?> GetByIdAsync(Guid id)
         {
             return await _entitySet.FindAsync(id);
         }
@@ -37,7 +37,7 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         /// <summary>
         /// Получить все сущности типа T
         /// </summary>
-        public async Task<List<T>> GetAllAsync()
+        public virtual async Task<List<T>> GetAllAsync()
         {
             return await _entitySet.ToListAsync();
         }

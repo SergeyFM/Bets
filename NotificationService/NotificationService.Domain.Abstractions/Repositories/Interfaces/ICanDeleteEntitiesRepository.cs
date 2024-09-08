@@ -16,7 +16,7 @@ namespace NotificationService.Domain.Abstractions.Repositories.Interfaces
         /// <remarks>
         /// Возможна реализация с отложенным удалением
         /// </remarks>
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(T entity);
 
         /// <summary>
         /// Удаляет несколько объект

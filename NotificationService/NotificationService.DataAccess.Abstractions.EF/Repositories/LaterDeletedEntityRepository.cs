@@ -24,16 +24,13 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         /// <summary>
         /// Помечает сущность для удаления
         /// </summary>
-        /// <param name="id">Идентификатор удаляемого объекта</param>
-        public virtual async Task DeleteAsync(Guid id)
+        /// <param name="entity">Удаляемая сущность</param>
+        /// <returns></returns>
+        public virtual async Task DeleteAsync(T entity)
         {
-            var entity = await GetByIdAsync(id);
-            if (entity != null)
-            {
-                entity.DeletedDate = DateTime.Now;
-                _entitySet.Update(entity);
-                await _dbContext.SaveChangesAsync();
-            }
+            entity.DeletedDate = DateTime.Now;
+            _entitySet.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -52,6 +49,23 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
                 _entitySet.UpdateRange(entities);
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        /// <summary>
+        /// Получение сущности по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор сущности</param>
+        public override async Task<T?> GetByIdAsync(Guid id)
+        {
+            return await _entitySet.Where(x => x.Id == id && x.DeletedDate == null).FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Получить все сущности типа T
+        /// </summary>
+        public override async Task<List<T>> GetAllAsync()
+        {
+            return await _entitySet.Where(x => x.DeletedDate == null).ToListAsync();
         }
     }
 }

@@ -82,6 +82,11 @@ namespace NotificationService.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Обновление мессенджера
+        /// </summary>
+        /// <param name="request">Данные для обновления</param>
+        /// <returns>MessengerResponse</returns>
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateMessengerAsync([FromBody] UpdateMessengerRequest request)
@@ -90,6 +95,22 @@ namespace NotificationService.Api.Controllers
             {
                 var result = await _service.UpdateMessengerAsync(request);
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteMessengerAsync([FromBody] DeleteMessengerRequest request)
+        {
+            try
+            {
+                await _service.DeleteMessengerAsync(request);
+                return NoContent();
             }
             catch (Exception ex)
             {

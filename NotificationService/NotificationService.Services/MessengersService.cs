@@ -113,5 +113,34 @@ namespace NotificationService.Services
                 throw new Exception(ex.ToString());
             }
         }
+
+        public async Task DeleteMessengerAsync(DeleteMessengerRequest request)
+        {
+            if (request == null)
+            {
+                var msg = "attempt to transmit a messenger without data";
+                var ex = new ArgumentNullException(nameof(request), msg);
+                _logger.LogError(ex, $"[MessengersService][DeleteMessengerAsync] ArgumentNullException: {msg}");
+                throw ex;
+            }
+
+            try
+            {
+                var response = await _repository.GetByIdAsync(request.Id);
+                if (response == null)
+                {
+                    throw new NotFoundException($"Мессенджер с идентификатором {request.Id} не найден.");
+                }
+
+                response.DeletedBy = request.DeletedBy;
+
+                await _repository.DeleteAsync(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[MessengersService][DeleteMessengerAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
     }
 }
