@@ -115,7 +115,7 @@ namespace NotificationService.Services
             }
         }
 
-        public async Task DeleteMessengerAsync(DeleteMessengerRequest request)
+        public async Task<int> DeleteMessengerAsync(DeleteRequest request)
         {
             if (request == null)
             {
@@ -127,15 +127,9 @@ namespace NotificationService.Services
 
             try
             {
-                var response = await _repository.GetByIdAsync(request.Id);
-                if (response == null)
-                {
-                    throw new NotFoundException($"Мессенджер с идентификатором {request.Id} не найден.");
-                }
+                var deletedCount = await _repository.DeleteAsync(request);
 
-                response.DeletedBy = request.DeletedBy;
-
-                await _repository.DeleteAsync(response);
+                return deletedCount;
             }
             catch (Exception ex)
             {

@@ -2,6 +2,7 @@
 using NotificationService.Domain.Abstractions.DTO;
 using NotificationService.Domain.Abstractions.Repositories.Interfaces;
 using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace NotificationService.DataAccess.Abstractions.EF.Repositories
 {
@@ -25,19 +26,20 @@ namespace NotificationService.DataAccess.Abstractions.EF.Repositories
         /// <summary>
         /// Помечает сущность для удаления
         /// </summary>
-        /// <param name="entity">Удаляемая сущность</param>
-        /// <returns></returns>
-        public async Task DeleteAsync(T entity)
+        /// <param name="request">Идентификаторы удаляемых объектов и кем удаляются</param>
+        /// <returns>Количество удаленных</returns>
+        public async Task<int> DeleteAsync(DeleteRequest request)
         {
-            entity.DeletedDate = DateTime.Now;
-            _entitySet.Update(entity);
-            await _dbContext.SaveChangesAsync();
+            var deletedCount = await _entitySet.Where(x => x.Id == request.Id && x.DeletedDate == null)
+                .ExecuteUpdateAsync(u => u.SetProperty(p => p.DeletedDate, DateTime.Now).SetProperty(p => p.DeletedBy, request.DeletedBy));
+            return deletedCount;  
         }
 
         /// <summary>
         /// Помечает несколько сущностей для удаления
         /// </summary>
-        /// <param name="id">Идентификаторы удаляемых объектов и кем удаляются</param>
+        /// <param name="request">Идентификаторы удаляемых объектов и кем удаляются</param>
+        /// <returns>Количество удаленных</returns>
         public async Task<int> DeleteRangeAsync(DeleteListRequest request)
         {
             var deletedCount = await _entitySet.Where(x => request.Ids.Contains(x.Id) && x.DeletedDate == null)

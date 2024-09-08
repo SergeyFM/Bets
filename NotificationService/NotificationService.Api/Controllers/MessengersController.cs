@@ -111,12 +111,12 @@ namespace NotificationService.Api.Controllers
         /// <returns>NoContent</returns>
         [HttpPost]
         [Route("delete")]
-        public async Task<IActionResult> DeleteMessengerAsync([FromBody] DeleteMessengerRequest request)
+        public async Task<IActionResult> DeleteMessengerAsync([FromBody] DeleteRequest request)
         {
             try
             {
-                await _service.DeleteMessengerAsync(request);
-                return NoContent();
+                var deletedCount = await _service.DeleteMessengerAsync(request);
+                return Ok();
             }
             catch (Exception ex)
             {

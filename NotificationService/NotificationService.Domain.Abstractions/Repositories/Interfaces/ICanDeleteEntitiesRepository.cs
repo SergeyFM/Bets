@@ -11,21 +11,17 @@ namespace NotificationService.Domain.Abstractions.Repositories.Interfaces
         where T : IdentifiableEntity
     {
         /// <summary>
-        /// Удаляет объект
+        /// Помечает сущность для удаления
         /// </summary>
-        /// <param name="id">Идентификатор удаляемого объекта</param>
-        /// <remarks>
-        /// Возможна реализация с отложенным удалением
-        /// </remarks>
-        Task DeleteAsync(T entity);
+        /// <param name="request">Идентификаторы удаляемых объектов и кем удаляются</param>
+        /// <returns>Количество удаленных</returns>
+        Task<int> DeleteAsync(DeleteRequest request);
 
         /// <summary>
-        /// Удаляет несколько объект
+        /// Помечает несколько сущностей для удаления
         /// </summary>
-        /// <param name="id">Идентификаторы удаляемых объектов</param>
-        /// <remarks>
-        /// Возможна реализация с отложенным удалением
-        /// </remarks>
+        /// <param name="request">Идентификаторы удаляемых объектов и кем удаляются</param>
+        /// <returns>Количество удаленных</returns>
         Task<int> DeleteRangeAsync(DeleteListRequest request);
     }
 }
