@@ -1,11 +1,10 @@
 ﻿using NotificationService.Models;
-using NotificationService.DataAccess.Abstractions.EF.Repositories;
-using NotificationService.Domain;
+using Bets.Abstractions.DataAccess.EF.Repositories;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using NotificationService.Domain.Directories;
 using NotificationService.Services.Exceptions;
-using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
+using Bets.Abstractions.Domain.Repositories.ModelRequests;
 
 namespace NotificationService.Services
 {

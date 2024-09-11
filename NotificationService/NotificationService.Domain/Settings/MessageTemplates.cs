@@ -1,4 +1,4 @@
-﻿using NotificationService.Domain.Abstractions.DTO;
+﻿using Bets.Abstractions.Domain.DTO;
 using NotificationService.Domain.Directories;
 
 namespace NotificationService.Domain.Settings

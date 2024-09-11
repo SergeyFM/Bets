@@ -1,6 +1,6 @@
-﻿using NotificationService.Domain.Abstractions.DTO;
+﻿using Bets.Abstractions.Domain.DTO;
 
-namespace NotificationService.Domain.Abstractions.Repositories.Interfaces
+namespace Bets.Abstractions.Domain.Repositories.Interfaces
 {
     /// <summary>
     /// Содержит методы, которые реализуют все репозитрии 

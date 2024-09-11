@@ -24,4 +24,10 @@
     <ProjectReference Include="..\NotificationService.Services\NotificationService.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Domain">
+      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

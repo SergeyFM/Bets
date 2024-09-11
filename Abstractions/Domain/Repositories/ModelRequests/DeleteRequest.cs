@@ -1,5 +1,5 @@
 ﻿
-namespace NotificationService.Domain.Abstractions.Repositories.ModelRequests
+namespace Bets.Abstractions.Domain.Repositories.ModelRequests
 {
     public sealed class DeleteRequest
     {

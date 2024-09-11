@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NotificationService.DataAccess.Abstractions.EF.Repositories;
+using Bets.Abstractions.DataAccess.EF.Repositories;
 using NotificationService.Domain;
 using NotificationService.Domain.Directories;
 

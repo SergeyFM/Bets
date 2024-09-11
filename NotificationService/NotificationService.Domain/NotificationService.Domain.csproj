@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotificationService.Domain.Abstractions\NotificationService.Domain.Abstractions.csproj" />
+    <Reference Include="Domain">
+      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

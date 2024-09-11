@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
+using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using NotificationService.Models;
 using NotificationService.Services;
 using System.ComponentModel.DataAnnotations;

@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NotificationService.DataAccess.Abstractions.EF.Repositories;
-using NotificationService.Domain;
 using NotificationService.Services;
-using NotificationService.Services.Helpers;
 using NotificationService.DataAccess;
 
 namespace NotificationService.Api.Helpers

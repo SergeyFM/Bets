@@ -1,5 +1,5 @@
 ﻿using NotificationService.Models;
-using NotificationService.DataAccess.Abstractions.EF.Repositories;
+using Bets.Abstractions.DataAccess.EF.Repositories;
 using NotificationService.Domain;
 using Microsoft.Extensions.Logging;
 using AutoMapper;

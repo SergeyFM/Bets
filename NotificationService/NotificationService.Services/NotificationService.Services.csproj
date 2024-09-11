@@ -12,9 +12,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotificationService.DataAccess.Abstractions.EF\NotificationService.DataAccess.Abstractions.EF.csproj" />
     <ProjectReference Include="..\NotificationService.Domain\NotificationService.Domain.csproj" />
     <ProjectReference Include="..\NotificationService.Models\NotificationService.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataAccess.EF">
+      <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\DataAccess.EF.dll</HintPath>
+    </Reference>
+    <Reference Include="Domain">
+      <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\Domain.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

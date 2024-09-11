@@ -1,4 +1,4 @@
-﻿namespace NotificationService.Domain.Abstractions.DTO
+﻿namespace Bets.Abstractions.Domain.DTO
 {
     /// <summary>
     /// Базовая сущность, поддерживающая отложенное удаление

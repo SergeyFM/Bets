@@ -1,7 +1,7 @@
-﻿using NotificationService.Domain.Abstractions.DTO;
-using NotificationService.Domain.Abstractions.Repositories.ModelRequests;
+﻿using Bets.Abstractions.Domain.DTO;
+using Bets.Abstractions.Domain.Repositories.ModelRequests;
 
-namespace NotificationService.Domain.Abstractions.Repositories.Interfaces
+namespace Bets.Abstractions.Domain.Repositories.Interfaces
 {
     /// <summary>
     /// Содержит методы, которые реализуют репозитории с возможностью удаления сущностей по идентификатору
