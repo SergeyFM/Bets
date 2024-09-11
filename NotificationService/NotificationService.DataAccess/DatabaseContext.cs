@@ -15,12 +15,14 @@ namespace NotificationService.DataAccess
 
         public DbSet<IncomingMessages> IncomingMessages { get; set; }
         public DbSet<Messengers> Messengers { get; set; }
+        public DbSet<Bettors> Bettors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             IncomingMessagesModelCreating(modelBuilder);
             MessengersModelCreating(modelBuilder);
+            BettorsModelCreating(modelBuilder);
         }
 
         private void IncomingMessagesModelCreating(ModelBuilder modelBuilder)
@@ -46,6 +48,18 @@ namespace NotificationService.DataAccess
                 .HasMaxLength(60);
             modelBuilder.Entity<Messengers>().Property(b => b.ModifiedBy).HasMaxLength(60);
             modelBuilder.Entity<Messengers>().Property(b => b.DeletedBy).HasMaxLength(60);
+        }
+
+        private void BettorsModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Bettors>().HasKey(e => e.Id);
+
+            modelBuilder.Entity<Bettors>().Property(b => b.Nickname).IsRequired()
+                .HasMaxLength(250);
+            modelBuilder.Entity<Bettors>().Property(b => b.CreatedBy).IsRequired()
+                .HasMaxLength(60);
+            modelBuilder.Entity<Bettors>().Property(b => b.ModifiedBy).HasMaxLength(60);
+            modelBuilder.Entity<Bettors>().Property(b => b.DeletedBy).HasMaxLength(60);
         }
     }
 }

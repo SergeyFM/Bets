@@ -13,7 +13,8 @@ namespace NotificationService.Services.Helpers
                 .AddAutoMapper(typeof(MappingProfile))
 
                 .AddScoped<CreatedEntityRepository<IncomingMessages>>()
-                .AddScoped<LaterDeletedEntityRepository<Messengers>>();
+                .AddScoped<LaterDeletedEntityRepository<Messengers>>()
+                .AddScoped<LaterDeletedEntityRepository<Bettors>>();
 
             return services;
         }

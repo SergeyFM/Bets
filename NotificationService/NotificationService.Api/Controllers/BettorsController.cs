@@ -7,32 +7,32 @@ namespace NotificationService.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MessengersController : ControllerBase
+    public class BettorsController : ControllerBase
     {
-        private readonly ILogger<MessengersController> _logger;
-        private readonly MessengersService _service;
+        private readonly ILogger<BettorsController> _logger;
+        private readonly BettorsService _service;
 
-        public MessengersController(ILogger<MessengersController> logger
-            , MessengersService service)
+        public BettorsController(ILogger<BettorsController> logger
+            , BettorsService service)
         {
             _logger = logger;
             _service = service;
         }
 
         /// <summary>
-        /// Добавить мессенджер
+        /// Добавить игрока
         /// </summary>
-        /// <param name="request">Содержит наименование мессенджера и кем добавляется запись</param>
+        /// <param name="request">Содержит никнейм игрока</param>
         /// <param name="ct"></param>
         /// <returns>Идентификатор новой записи</returns>
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> AddMessengerAsync([FromBody] MessengerRequest request
+        public async Task<IActionResult> AddBettorAsync([FromBody] BettorRequest request
             , CancellationToken ct)
         {
             try
             {
-                var messengerId = await _service.AddMessengerAsync(request, ct);
+                var messengerId = await _service.AddBettorAsync(request, ct);
                 return Ok(messengerId);
             }
             catch (Exception ex)
@@ -43,17 +43,17 @@ namespace NotificationService.Api.Controllers
         }
 
         /// <summary>
-        /// Получение мессенджера по идентификатору
+        /// Получение игрока по идентификатору
         /// </summary>
-        /// <param name="id">Идентификатор мессенджера</param>
-        /// <returns>MessengerResponse</returns>
+        /// <param name="id">Идентификатор игрока</param>
+        /// <returns>BettorResponse</returns>
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetMessengerAsync([FromRoute] Guid id)
+        public async Task<IActionResult> GetBettorAsync([FromRoute] Guid id)
         {
             try
             {
-                var result = await _service.GetMessengerAsync(id);
+                var result = await _service.GetBettorAsync(id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -64,15 +64,15 @@ namespace NotificationService.Api.Controllers
         }
 
         /// <summary>
-        /// Получение списка всех мессенджеров
+        /// Получение списка всех игроков
         /// </summary>
-        /// <returns>List of MessengerResponse</returns>
+        /// <returns>List of BettorResponse</returns>
         [HttpGet]
-        public async Task<IActionResult> GetListMessengersAsync()
+        public async Task<IActionResult> GetListBettorsAsync()
         {
             try
             {
-                var result = await _service.GetListMessengersAsync();
+                var result = await _service.GetListBettorsAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -83,17 +83,17 @@ namespace NotificationService.Api.Controllers
         }
 
         /// <summary>
-        /// Обновление мессенджера
+        /// Обновление никнейма игрока
         /// </summary>
         /// <param name="request">Данные для обновления</param>
-        /// <returns>MessengerResponse</returns>
+        /// <returns>BettorResponse</returns>
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateMessengerAsync([FromBody] MessengerUpdateRequest request)
+        public async Task<IActionResult> UpdateBettorAsync([FromBody] BettorUpdateRequest request)
         {
             try
             {
-                var result = await _service.UpdateMessengerAsync(request);
+                var result = await _service.UpdateBettorAsync(request);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -110,11 +110,11 @@ namespace NotificationService.Api.Controllers
         /// <returns>Кол-во удаленных записей</returns>
         [HttpPost]
         [Route("delete")]
-        public async Task<IActionResult> DeleteMessengerAsync([FromBody] DeleteRequest request)
+        public async Task<IActionResult> DeleteBettorAsync([FromBody] DeleteRequest request)
         {
             try
             {
-                var deletedCount = await _service.DeleteMessengerAsync(request);
+                var deletedCount = await _service.DeleteBettorAsync(request);
                 return Ok(deletedCount);
             }
             catch (Exception ex)
@@ -131,11 +131,11 @@ namespace NotificationService.Api.Controllers
         /// <returns>Кол-во удаленных записей</returns>
         [HttpPost]
         [Route("delete/list")]
-        public async Task<IActionResult> DeleteListMessengersAsync([FromBody] DeleteListRequest request)
+        public async Task<IActionResult> DeleteListBettorsAsync([FromBody] DeleteListRequest request)
         {
             try
             {
-                var deletedCount = await _service.DeleteListMessengersAsync(request);
+                var deletedCount = await _service.DeleteListBettorsAsync(request);
                 return Ok(deletedCount);
             }
             catch (Exception ex)
