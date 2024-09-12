@@ -1,11 +1,7 @@
-﻿using Bets.Abstractions.Domain.DTO;
-
-namespace NotificationService.Domain.Directories
+﻿
+namespace NotificationService.Models
 {
-    /// <summary>
-    /// Справочник адресов в мессенджерах, по которым можно отправлять сообщения игрокам
-    /// </summary>
-    public class BettorAddresses : LaterDeletedEntity
+    public sealed class BettorAddressesRequest
     {
         /// <summary>
         /// Адрес для отправки сообщения
@@ -23,18 +19,13 @@ namespace NotificationService.Domain.Directories
         public Guid BettorId { get; set; }
 
         /// <summary>
-        /// Игрок
-        /// </summary>
-        public required virtual Bettors Bettor { get; set; }
-
-        /// <summary>
         /// Идентификатор мессенджера
         /// </summary>
         public Guid MessengerId { get; set; }
 
         /// <summary>
-        /// Мессенджер
+        /// Создатель
         /// </summary>
-        public required virtual Messengers Messenger { get; set; }
+        public string? CreatedBy { get; set; }
     }
 }

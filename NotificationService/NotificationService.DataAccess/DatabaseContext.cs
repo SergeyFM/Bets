@@ -23,6 +23,7 @@ namespace NotificationService.DataAccess
             IncomingMessagesModelCreating(modelBuilder);
             MessengersModelCreating(modelBuilder);
             BettorsModelCreating(modelBuilder);
+            BettorAddressesModelCreating(modelBuilder);
         }
 
         private void IncomingMessagesModelCreating(ModelBuilder modelBuilder)
@@ -60,6 +61,30 @@ namespace NotificationService.DataAccess
                 .HasMaxLength(60);
             modelBuilder.Entity<Bettors>().Property(b => b.ModifiedBy).HasMaxLength(60);
             modelBuilder.Entity<Bettors>().Property(b => b.DeletedBy).HasMaxLength(60);
+        }
+
+        private void BettorAddressesModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BettorAddresses>()
+                .HasOne(r => r.Bettor)
+                .WithMany(b => b.BettorMessangers)
+                .HasForeignKey(k => k.BettorId)
+                .IsRequired();
+
+            modelBuilder.Entity<BettorAddresses>()
+                .HasOne(r => r.Messenger)
+                .WithMany(b => b.BettorAddresses)
+                .HasForeignKey(k => k.MessengerId)
+                .IsRequired();
+
+            modelBuilder.Entity<BettorAddresses>().HasKey(e => e.Id);
+
+            modelBuilder.Entity<BettorAddresses>().Property(b => b.Address).IsRequired()
+                .HasMaxLength(250);
+            modelBuilder.Entity<BettorAddresses>().Property(b => b.CreatedBy).IsRequired()
+                .HasMaxLength(60);
+            modelBuilder.Entity<BettorAddresses>().Property(b => b.ModifiedBy).HasMaxLength(60);
+            modelBuilder.Entity<BettorAddresses>().Property(b => b.DeletedBy).HasMaxLength(60);
         }
     }
 }

@@ -12,9 +12,10 @@ namespace NotificationService.Domain.Directories
         /// </summary>
         public string Name { get; set; }
 
-        //Информация в этом справочнике об игроках
-        //, с которыми возможна связь по конкретному мессенджеру
-        //, пожалуй, не нужна
-        //public List<BettorAddresses> BettorAddresses { get; } = [];
+        /// <summary>
+        /// Используется только для определения связи с адресами игроков. 
+        /// Нет смысла где-то выводить или ещё как-то использовать этот список.
+        /// </summary>
+        public List<BettorAddresses> BettorAddresses { get; } = [];
     }
 }

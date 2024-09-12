@@ -19,6 +19,7 @@ namespace NotificationService.Api.Helpers
                 .AddScoped<IncomingMessagesService>()
                 .AddScoped<MessengersService>()
                 .AddScoped<BettorsService>()
+                .AddScoped<BettorAddressesService>()
                 .AddScoped<DbContext, DatabaseContext>();
 
             return services;

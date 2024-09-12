@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotificationService.DataAccess;
 
@@ -11,9 +12,11 @@ using NotificationService.DataAccess;
 namespace NotificationService.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240912073555_AddBettorAddresses")]
+    partial class AddBettorAddresses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,9 +54,6 @@ namespace NotificationService.DataAccess.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("MessengerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
@@ -67,8 +67,6 @@ namespace NotificationService.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BettorId");
-
-                    b.HasIndex("MessengerId");
 
                     b.ToTable("BettorAddresses");
                 });
@@ -190,25 +188,12 @@ namespace NotificationService.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NotificationService.Domain.Directories.Messengers", "Messenger")
-                        .WithMany("BettorAddresses")
-                        .HasForeignKey("MessengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Bettor");
-
-                    b.Navigation("Messenger");
                 });
 
             modelBuilder.Entity("NotificationService.Domain.Directories.Bettors", b =>
                 {
                     b.Navigation("BettorMessangers");
-                });
-
-            modelBuilder.Entity("NotificationService.Domain.Directories.Messengers", b =>
-                {
-                    b.Navigation("BettorAddresses");
                 });
 #pragma warning restore 612, 618
         }
