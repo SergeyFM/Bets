@@ -21,9 +21,10 @@ namespace NotificationService.Services.Helpers
             CreateMap<BettorRequest, Bettors>(); //Идентификатор не генерируем, потому что он должен быть такой же, как в UserService
             CreateMap<Bettors, BettorResponse>();
             CreateMap<BettorUpdateRequest, Messengers>();
-
+            
             CreateMap<BettorAddressesRequest, BettorAddresses>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
+            CreateMap<BettorAddresses, BettorAddressResponse>();
         }
     }
 }

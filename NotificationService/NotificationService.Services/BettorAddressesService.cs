@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
-using Bets.Abstractions.DataAccess.EF.Repositories;
+//using Bets.Abstractions.DataAccess.EF.Repositories;
 using Microsoft.Extensions.Logging;
 using NotificationService.Domain.Directories;
 using NotificationService.Models;
+using NotificationService.Services.Exceptions;
+using NotificationService.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,14 @@ namespace NotificationService.Services
 {
     public class BettorAddressesService
     {
-        private readonly LaterDeletedEntityRepository<BettorAddresses> _repository;
+        private readonly BettorAddressRepository _repository;
         private readonly ILogger<BettorAddressesService> _logger;
         private readonly IMapper _mapper;
 
-        public BettorAddressesService(LaterDeletedEntityRepository<BettorAddresses> bettorsRepository
+        public BettorAddressesService(BettorAddressRepository bettorsRepository
             , ILogger<BettorAddressesService> logger
-            , IMapper mapper)
+            , IMapper mapper
+            )
         {
             _repository = bettorsRepository;
             _logger = logger;
@@ -47,6 +50,27 @@ namespace NotificationService.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"[BettorAddressesService][AddBettorAddressesAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<BettorAddressResponse> GetBettorAddressesAsync(Guid id)
+        {
+            try
+            {
+                var response = await _repository.GetByIdAsync(id);
+                if (response == null)
+                {
+                    throw new NotFoundException($"Адрес с идентификатором {id} не найден.");
+                }
+
+                var result = _mapper.Map<BettorAddressResponse>(response);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[BettorsService][GetBettorAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }

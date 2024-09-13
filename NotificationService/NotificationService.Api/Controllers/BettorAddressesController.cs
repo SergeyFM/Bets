@@ -40,5 +40,26 @@ namespace NotificationService.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Получение адреса по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор игрока</param>
+        /// <returns>BettorResponse</returns>
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetBettorAddressesAsync([FromRoute] Guid id)
+        {
+            try
+            {
+                var result = await _service.GetBettorAddressesAsync(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
