@@ -20,11 +20,14 @@ namespace NotificationService.Services.Helpers
 
             CreateMap<BettorRequest, Bettors>(); //Идентификатор не генерируем, потому что он должен быть такой же, как в UserService
             CreateMap<Bettors, BettorResponse>();
-            CreateMap<BettorUpdateRequest, Messengers>();
+            //CreateMap<BettorUpdateRequest, Messengers>();
             
             CreateMap<BettorAddressesRequest, BettorAddresses>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
             CreateMap<BettorAddresses, BettorAddressResponse>();
+            //далее здесь цель одна - не добавлять зависимость от модели в репозиторий (дата контекст) -
+            //это, если кого-то смутят поля с дефолтными значениями - мы их просто не обновляем, и нам всё равно, что там
+            CreateMap<AddressUpdateRequest, BettorAddresses>(); 
         }
     }
 }

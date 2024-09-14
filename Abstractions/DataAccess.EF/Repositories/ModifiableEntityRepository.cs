@@ -30,5 +30,20 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
             _entitySet.Update(entity);
             await _dbContext.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Изменяет в хранилище информацию о нескольких сущностях
+        /// </summary>
+        /// <param name="entity">Изменяемые данные</param>
+        public virtual async Task UpdateAsync(IEnumerable<T> entitys)
+        {
+            var modifiedDate = DateTime.Now;
+            foreach (var entity in entitys)
+            {
+                entity.ModifiedDate = modifiedDate;
+                _entitySet.Update(entity);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

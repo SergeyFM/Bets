@@ -88,7 +88,7 @@ namespace NotificationService.Services
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[BettorsService][UpdateMessengerAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[BettorsService][UpdateBettorAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
@@ -97,7 +97,7 @@ namespace NotificationService.Services
                 var response = await _repository.GetByIdAsync(request.Id);
                 if (response == null)
                 {
-                    throw new NotFoundException($"[BettorsService][UpdateMessengerAsync] Мессенджер с идентификатором {request.Id} не найден.");
+                    throw new NotFoundException($"[BettorsService][UpdateBettorAsync] Мессенджер с идентификатором {request.Id} не найден.");
                 }
 
                 response.Nickname = request.Nickname;
@@ -109,7 +109,7 @@ namespace NotificationService.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[BettorsService][UpdateMessengerAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[BettorsService][UpdateBettorAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
