@@ -3,6 +3,10 @@ using NotificationService.Domain.Directories;
 
 namespace NotificationService.Domain
 {
+    /* 
+     * Функционал с шаблонами сообщений отложен до лучших времен.
+     * Пока же отправка будет осуществляться непосредственно из очереди входящих (IncomingMessages)
+    */
     /// <summary>
     /// Информация об отправке сообщения конечному пользователю
     /// </summary>
@@ -34,28 +38,5 @@ namespace NotificationService.Domain
         /// Номер попытки
         /// </summary>
         public int TrialNumber { get; set; }
-    }
-
-    public enum SendingStates
-    {
-        /// <summary>
-        /// Готово к отправке
-        /// </summary>
-        ReadyToSent = 0,
-
-        /// <summary>
-        /// В процессе отправки
-        /// </summary>
-        InSendingProcess = 1,
-
-        /// <summary>
-        /// Сбой
-        /// </summary>
-        Failure = 2,
-
-        /// <summary>
-        /// Сообщение успешно отправлено
-        /// </summary>
-        Successfully = 3,
     }
 }

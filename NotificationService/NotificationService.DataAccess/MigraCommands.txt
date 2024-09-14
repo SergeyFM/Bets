@@ -1,3 +1,3 @@
-dotnet ef migrations add AddMessengers --startup-project NotificationService.Api --project NotificationService.DataAccess --context DatabaseContext
+dotnet ef migrations add AddSendingStatesInIncomingMessages --startup-project NotificationService.Api --project NotificationService.DataAccess --context DatabaseContext
 
 dotnet ef database update --startup-project NotificationService.Api --project NotificationService.DataAccess --context DatabaseContext

@@ -3,6 +3,9 @@ using NotificationService.Domain.Directories;
 
 namespace NotificationService.Domain.Settings
 {
+    /* 
+     * Функционал с шаблонами сообщений отложен до лучших времен.
+    */
     /// <summary>
     /// Шаблоны сообщений
     /// </summary>

@@ -28,5 +28,10 @@ namespace NotificationService.Domain
         /// , было ли сообщение успешно отправлено конечному получателю.
         /// </summary>
         public DateTime? ActualDate { get; set; }
+
+        /// <summary>
+        /// Состояние отправки сообщения
+        /// </summary>
+        public SendingStates State { get; set; }
     }
 }
