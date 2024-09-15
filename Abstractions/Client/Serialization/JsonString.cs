@@ -1,5 +1,5 @@
 ﻿
-namespace Client.Serialization
+namespace Bets.Abstractions.Client.Serialization
 {
     public class JsonString
     {

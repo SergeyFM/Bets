@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.Text;
-using Client.Exceptions;
-using Client.Serialization;
+using Bets.Abstractions.Client.Exceptions;
+using Bets.Abstractions.Client.Serialization;
 
-namespace Client
+namespace Bets.Abstractions.Client
 {
     public abstract class ClientBase
     {

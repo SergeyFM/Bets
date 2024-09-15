@@ -1,5 +1,5 @@
 ﻿
-namespace Client.Exceptions
+namespace Bets.Abstractions.Client.Exceptions
 {
     [Serializable]
     public class ClientBaseException : Exception

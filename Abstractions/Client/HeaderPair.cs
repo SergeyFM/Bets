@@ -1,5 +1,5 @@
 ﻿
-namespace Client
+namespace Bets.Abstractions.Client
 {
     public sealed class HeaderPair
     {
