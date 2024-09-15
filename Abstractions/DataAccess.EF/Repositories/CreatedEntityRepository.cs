@@ -29,5 +29,17 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
             await _entitySet.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Добавляет несколько сущностей в хранилище
+        /// </summary>
+        /// <param name="entity">Новые данные</param>
+        public virtual async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            _dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+            await _entitySet.AddRangeAsync(entities);
+            await _dbContext.SaveChangesAsync();
+            _dbContext.ChangeTracker.AutoDetectChangesEnabled = true;
+        }
     }
 }

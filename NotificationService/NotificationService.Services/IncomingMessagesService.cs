@@ -46,6 +46,31 @@ namespace NotificationService.Services
             }
         }
 
+        public async Task<List<Guid>> AddRangeMessagesAsync(List<IncomingMessageRequest> request
+            , CancellationToken ct)
+        {
+            if (request == null || !request.Any())
+            {
+                var msg = "attempt to transmit a message without data";
+                var ex = new ArgumentNullException(nameof(request), msg);
+                _logger.LogError(ex, $"[IncomingMessagesService][AddRangeMessagesAsync] ArgumentNullException: {msg}");
+                throw ex;
+            }
+
+            try
+            {
+                var incomingMessages = _mapper.Map<List<IncomingMessages>>(request);
+                await _repository.AddRangeAsync(incomingMessages);
+
+                return incomingMessages.Select(x => x.Id).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[IncomingMessagesService][AddRangeMessagesAsync] Exception: {ex.ToString()}");
+                throw new Exception(ex.ToString());
+            }
+        }
+
         public async Task<List<IncomingMessageResponse>> GetListMessagesAsync()
         {
             try

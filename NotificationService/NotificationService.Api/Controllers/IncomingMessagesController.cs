@@ -42,6 +42,29 @@ namespace NotificationService.Api.Controllers
         }
 
         /// <summary>
+        /// Добавить несколько сообщений в систему
+        /// </summary>
+        /// <param name="request">Данные сообщений</param>
+        /// <param name="ct">CancellationToken</param>
+        /// <returns>Идентификатор добавленного сообщения</returns>
+        [HttpPost]
+        [Route("createRange")]
+        public async Task<IActionResult> AddRangeMessagesAsync([FromBody] List<IncomingMessageRequest> request
+            , CancellationToken ct)
+        {
+            try
+            {
+                var messageId = await _messagesService.AddRangeMessagesAsync(request, ct);
+                return Ok(messageId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Получение списка всех входящих сообщений
         /// </summary>
         /// <returns>List of IncomingMessageResponse</returns>
