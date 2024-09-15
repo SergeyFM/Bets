@@ -7,10 +7,11 @@ namespace NotificationService.Domain.Directories
     /// </summary>
     public sealed class MessageSources : LaterDeletedEntity
     {
-        /// <summary>
-        /// Идентификатор сервиса источника
-        /// </summary>
-        public Guid AppId { get; set; }
+        // Вместо него просто базовый Id
+        ///// <summary>
+        ///// Идентификатор сервиса источника
+        ///// </summary>
+        //public Guid AppId { get; set; }
 
         /// <summary>
         /// Описание источника

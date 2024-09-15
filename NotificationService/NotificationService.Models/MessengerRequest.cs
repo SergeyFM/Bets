@@ -11,6 +11,6 @@ namespace NotificationService.Models
         /// <summary>
         /// Создатель
         /// </summary>
-        public string? CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

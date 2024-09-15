@@ -1,94 +1,94 @@
-﻿using NotificationService.Models;
+﻿using AutoMapper;
 using Bets.Abstractions.DataAccess.EF.Repositories;
-using Microsoft.Extensions.Logging;
-using AutoMapper;
-using NotificationService.Domain.Directories;
-using NotificationService.Services.Exceptions;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
+using Microsoft.Extensions.Logging;
+using NotificationService.Domain.Directories;
+using NotificationService.Models;
+using NotificationService.Services.Exceptions;
 
 namespace NotificationService.Services
 {
-    public class BettorsService
+    public class MessageSourcesService
     {
-        private readonly LaterDeletedEntityRepository<Bettors> _repository;
-        private readonly ILogger<BettorsService> _logger;
+        private readonly LaterDeletedEntityRepository<MessageSources> _repository;
+        private readonly ILogger<MessageSourcesService> _logger;
         private readonly IMapper _mapper;
 
-        public BettorsService(LaterDeletedEntityRepository<Bettors> bettorsRepository
-            , ILogger<BettorsService> logger
+        public MessageSourcesService(LaterDeletedEntityRepository<MessageSources> repository
+            , ILogger<MessageSourcesService> logger
             , IMapper mapper)
         {
-            _repository = bettorsRepository;
+            _repository = repository;
             _logger = logger;
             _mapper = mapper;
         }
 
-        public async Task<Guid> AddBettorAsync(BettorRequest request
+        public async Task<Guid> AddMessageSourceAsync(MessageSourcesRequest request
             , CancellationToken ct)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[BettorsService][AddBettorAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[MessageSourcesService][AddMessageSourceAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
             try
             {
-                var bettor = _mapper.Map<Bettors>(request);
+                var bettor = _mapper.Map<MessageSources>(request);
                 await _repository.AddAsync(bettor);
 
                 return bettor.Id;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[BettorsService][AddBettorAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[MessageSourcesService][AddMessageSourceAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<BettorResponse> GetBettorAsync(Guid id)
+        public async Task<MessageSourceResponse> GetMessageSourceAsync(Guid id)
         {
             try
             {
                 var response = await _repository.GetByIdAsync(id);
                 if (response == null)
                 {
-                    throw new NotFoundException($"Игрок с идентификатором {id} не найден.");
+                    throw new NotFoundException($"Источник сообщений с идентификатором {id} не найден.");
                 }
 
-                return _mapper.Map<BettorResponse>(response);
+                return _mapper.Map<MessageSourceResponse>(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[BettorsService][GetBettorAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[MessageSourcesService][GetMessageSourceAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<List<BettorResponse>> GetListBettorsAsync()
+        public async Task<List<MessageSourceResponse>> GetListMessageSourcesAsync()
         {
             try
             {
                 var response = await _repository.GetAllAsync();
 
-                return _mapper.Map<List<BettorResponse>>(response);
+                return _mapper.Map<List<MessageSourceResponse>>(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[BettorsService][GetBettorAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[MessageSourcesService][GetListMessageSourcesAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<BettorResponse> UpdateBettorAsync(BettorUpdateRequest request)
+        public async Task<MessageSourceResponse> UpdateMessageSourceAsync(MessageSourceUpdateRequest request)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[BettorsService][UpdateBettorAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[MessageSourcesService][UpdateMessageSourceAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
@@ -100,27 +100,27 @@ namespace NotificationService.Services
                     throw new NotFoundException($"Мессенджер с идентификатором {request.Id} не найден.");
                 }
 
-                response.Nickname = request.Nickname;
+                response.Description = request.Description;
                 response.ModifiedBy = request.ModifiedBy;
 
                 await _repository.UpdateAsync(response);
 
-                return _mapper.Map<BettorResponse>(response);
+                return _mapper.Map<MessageSourceResponse>(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[BettorsService][UpdateBettorAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[MessageSourcesService][UpdateMessageSourceAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<int> DeleteBettorAsync(DeleteRequest request)
+        public async Task<int> DeleteMessageSourceAsync(DeleteRequest request)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[BettorsService][DeleteBettorAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[MessageSourcesService][DeleteMessageSourceAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
@@ -132,18 +132,18 @@ namespace NotificationService.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[BettorsService][DeleteBettorAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[MessageSourcesService][DeleteMessageSourceAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<int> DeleteListBettorsAsync(DeleteListRequest request)
+        public async Task<int> DeleteListMessageSourcesAsync(DeleteListRequest request)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[BettorsService][DeleteListBettorsAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[MessageSourcesService][DeleteListMessageSourcesAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
@@ -155,7 +155,7 @@ namespace NotificationService.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[BettorsService][DeleteListBettorsAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[MessageSourcesService][DeleteListMessageSourcesAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }

@@ -16,6 +16,7 @@ namespace NotificationService.Services.Helpers
                 .AddScoped<CreatedEntityRepository<IncomingMessages>>()
                 .AddScoped<LaterDeletedEntityRepository<Messengers>>()
                 .AddScoped<LaterDeletedEntityRepository<Bettors>>()
+                .AddScoped<LaterDeletedEntityRepository<MessageSources>>()
                 .AddScoped<BettorAddressRepository>();
 
             return services;

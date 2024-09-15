@@ -5,7 +5,7 @@
         /// <summary>
         /// Отправитель (наименование или идентификатор класса или пользователя)
         /// </summary>
-        public string? CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
         /// <summary>
         /// Идентификатор получателя сообщения (Bettors)

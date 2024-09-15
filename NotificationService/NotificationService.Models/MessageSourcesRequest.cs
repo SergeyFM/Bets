@@ -1,17 +1,17 @@
 ﻿
 namespace NotificationService.Models
 {
-    public sealed class BettorRequest
+    public sealed class MessageSourcesRequest
     {
         /// <summary>
-        /// Идентификатор игрока (сквозной для всех сервисов)
+        /// Идентификатор сервиса источника (сквозной для всех сервисов)
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Как обращаться к игроку
+        /// Описание источника
         /// </summary>
-        public string Nickname { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Создатель
