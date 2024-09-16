@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 
 public interface IBetsService {
@@ -22,10 +23,10 @@ public class FakeBetsService : IBetsService {
     }
 
     public void PlaceBet(int eventId, int outcomeId, decimal amount) {
-        // Fake implementation: Do nothing
+        Console.WriteLine($"Bet placed on event {eventId}, outcome {outcomeId} with amount {amount}");
     }
 
     public void CancelBet(int betId) {
-        // Fake implementation: Do nothing
+        Console.WriteLine($"Bet {betId} cancelled");
     }
 }

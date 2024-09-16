@@ -1,10 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
-using Bets.Core.Models;
 
-namespace Bets.Application.Services;
 public interface IWalletService {
-    Task<Wallet> GetWalletByUserIdAsync(Guid userId);
-    Task<bool> DepositAsync(Guid userId, decimal amount);
-    Task<bool> WithdrawAsync(Guid userId, decimal amount);
+    decimal GetBalance(int userId);
+    void AddFunds(int userId, decimal amount);
+    void WithdrawFunds(int userId, decimal amount);
+}
+
+public class FakeWalletService : IWalletService {
+    public decimal GetBalance(int userId) {
+        return 1000m; // Fake balance
+    }
+
+    public void AddFunds(int userId, decimal amount) {
+        // Fake implementation: Do nothing
+    }
+
+    public void WithdrawFunds(int userId, decimal amount) {
+        // Fake implementation: Do nothing
+    }
 }
