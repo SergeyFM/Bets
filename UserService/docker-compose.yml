@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  userserver:
+    image: ${DOCKER_REGISTRY-}userserver
+    build:
+      context: .
+      dockerfile: UserServer/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
+      - ASPNETCORE_DBPASSWORD=${ASPNETCORE_DBPASSWORD}
+      - ASPNETCORE_DBBASE=${ASPNETCORE_DBBASE}
+    depends_on:
+    - postgresDBUsers  
+  postgresDBUsers:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${ASPNETCORE_DBBASE}
+      POSTGRES_USER: ${ASPNETCORE_DBUSER}
+      POSTGRES_PASSWORD: ${ASPNETCORE_DBPASSWORD}
+    ports:
+      - "5432:${ASPNETCORE_DBPORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
