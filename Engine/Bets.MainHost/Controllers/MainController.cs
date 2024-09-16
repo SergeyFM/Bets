@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Bets.MainHost.Controllers;
-public class HomeController : Controller {
-    private readonly ILogger<HomeController> _logger;
+public class MainController : Controller {
+    private readonly ILogger<MainController> _logger;
 
-    public HomeController(ILogger<HomeController> logger) {
+    public MainController(ILogger<MainController> logger) {
         _logger = logger;
     }
 
@@ -23,4 +23,18 @@ public class HomeController : Controller {
     public IActionResult Error() {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    public IActionResult Information() {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult SubmitContact(string name, string email, string message) {
+
+        //TODO: Implement SubmitContact Request
+        ViewBag.Message = "Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.";
+
+        return View("Information");
+    }
+
 }
