@@ -1,0 +1,45 @@
+@model User
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Личный кабинет</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label"><strong>Имя:</strong></label>
+                        <div class="col-sm-9">
+                            <p class="form-control-plaintext">@Model.Name</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label"><strong>Электронная почта:</strong></label>
+                        <div class="col-sm-9">
+                            <p class="form-control-plaintext">@Model.Email</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label"><strong>Телефон:</strong></label>
+                        <div class="col-sm-9">
+                            <p class="form-control-plaintext">@Model.PhoneNumber</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label"><strong>Дата рождения:</strong></label>
+                        <div class="col-sm-9">
+                            <p class="form-control-plaintext">@Model.DateOfBirth</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-secondary" onclick="window.history.back();">Назад</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

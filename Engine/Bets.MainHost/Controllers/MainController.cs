@@ -37,4 +37,18 @@ public class MainController : Controller {
         return View("Information");
     }
 
+    // Handle the "Личный кабинет" route
+    public IActionResult Profile() {
+        // Simulating fetching user profile (replace with actual user fetching logic)
+        // TODO: Remove user profile simulation!
+        User user = new() {
+            Name = "Иван Иванов",
+            Email = "ivan@example.com",
+            PhoneNumber = "+7 999 123 4567",
+            DateOfBirth = "12 января 1990 года"
+        };
+
+        return View(user);
+    }
+
 }
