@@ -88,11 +88,6 @@ namespace UserServer.WebHost.Controllers.V1
         [Authorize(Roles = "Admin")] // Ограничиваем доступ только для администраторов
         public async Task<IActionResult> UpdateUser(string id, UserDto user)
         {
-            //if (id != user.Id)
-            //{
-            //    return BadRequest();
-            //}
-
             await _userService.UpdateUserAsync(user);
             
             return Ok();

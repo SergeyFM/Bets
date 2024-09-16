@@ -11,18 +11,27 @@ namespace UserServer.Core.Service
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private const string _defaultRoleUser = "User";
+        private readonly IRoleService _roleService;
 
-        public UserService(IUserRepository userRepository, IMapper mappre, UserManager<User> userManager)
+        public UserService(IUserRepository userRepository, IMapper mappre, UserManager<User> userManager, IRoleService roleService )
         {
             _userRepository = userRepository;
             _mapper = mappre;
             _userManager = userManager;
+            _roleService = roleService;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserDto userDto, string password)
         {
             var user = _mapper.Map<User>(userDto);
             var result = await _userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+               var resultAddRole =  await _roleService.AddUserToRoleAsync(user.Id, new RoleDto { Name = _defaultRoleUser });
+                if (!resultAddRole.Succeeded) return resultAddRole; 
+            }
 
             return result;
         }

@@ -112,6 +112,7 @@ namespace UserServer
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+            builder.Services.AddScoped<IRoleService, RoleService>();
             builder.Services.AddApiVersioning(option =>
             {
                 option.AssumeDefaultVersionWhenUnspecified = true;
