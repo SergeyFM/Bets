@@ -231,7 +231,7 @@ namespace NotificationService.Services
             }
         }
 
-        public async Task<int> DeleteettorAddressAsync(DeleteRequest request)
+        public async Task<int> DeleteBettorAddressAsync(DeleteRequest request)
         {
             if (request == null)
             {

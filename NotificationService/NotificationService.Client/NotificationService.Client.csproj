@@ -14,6 +14,9 @@
     <Reference Include="Client">
       <HintPath>..\..\Abstractions\Client\bin\Debug\net8.0\Client.dll</HintPath>
     </Reference>
+    <Reference Include="Domain">
+      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using Microsoft.AspNetCore.Mvc;
 using NotificationService.Models;
+using NotificationService.Models.Common;
 using NotificationService.Services;
 
 namespace NotificationService.Api.Controllers
@@ -32,13 +33,13 @@ namespace NotificationService.Api.Controllers
         {
             try
             {
-                var messengerId = await _service.AddMessageSourceAsync(request, ct);
-                return Ok(messengerId);
+                var sourceId = await _service.AddMessageSourceAsync(request, ct);
+                return Ok(CreateResponse.CreateSuccessResponse(sourceId));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(CreateResponse.CreateErrorResponse(ex.Message));
             }
         }
 
@@ -115,12 +116,12 @@ namespace NotificationService.Api.Controllers
             try
             {
                 var deletedCount = await _service.DeleteMessageSourceAsync(request);
-                return Ok(deletedCount);
+                return Ok(UpdateResponse.CreateSuccessResponse(deletedCount));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(UpdateResponse.CreateErrorResponse(ex.Message));
             }
         }
 
@@ -136,12 +137,12 @@ namespace NotificationService.Api.Controllers
             try
             {
                 var deletedCount = await _service.DeleteListMessageSourcesAsync(request);
-                return Ok(deletedCount);
+                return Ok(UpdateResponse.CreateSuccessResponse(deletedCount));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(UpdateResponse.CreateErrorResponse(ex.Message));
             }
         }
     }

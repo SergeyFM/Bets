@@ -1,6 +1,7 @@
 ﻿using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using Microsoft.AspNetCore.Mvc;
 using NotificationService.Models;
+using NotificationService.Models.Common;
 using NotificationService.Services;
 
 namespace NotificationService.Api.Controllers
@@ -32,13 +33,13 @@ namespace NotificationService.Api.Controllers
         {
             try
             {
-                var messengerId = await _service.AddBettorAddressesAsync(request, ct);
-                return Ok(messengerId);
+                var addressId = await _service.AddBettorAddressesAsync(request, ct);
+                return Ok(CreateResponse.CreateSuccessResponse(addressId));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(CreateResponse.CreateErrorResponse(ex.Message));
             }
         }
 
@@ -134,12 +135,12 @@ namespace NotificationService.Api.Controllers
             try
             {
                 var updatedCount = await _service.UpdateAddressAsync(request);
-                return Ok(updatedCount);
+                return Ok(UpdateResponse.CreateSuccessResponse(updatedCount));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(UpdateResponse.CreateErrorResponse(ex.Message));
             }
         }
 
@@ -213,17 +214,17 @@ namespace NotificationService.Api.Controllers
         /// <returns>Кол-во удаленных записей</returns>
         [HttpPost]
         [Route("delete")]
-        public async Task<IActionResult> DeleteettorAddressAsync([FromBody] DeleteRequest request)
+        public async Task<IActionResult> DeleteBettorAddressAsync([FromBody] DeleteRequest request)
         {
             try
             {
-                var deletedCount = await _service.DeleteettorAddressAsync(request);
-                return Ok(deletedCount);
+                var deletedCount = await _service.DeleteBettorAddressAsync(request);
+                return Ok(UpdateResponse.CreateSuccessResponse(deletedCount));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(UpdateResponse.CreateErrorResponse(ex.Message));
             }
         }
 
@@ -239,12 +240,12 @@ namespace NotificationService.Api.Controllers
             try
             {
                 var deletedCount = await _service.DeleteListBettorAddressesAsync(request);
-                return Ok(deletedCount);
+                return Ok(UpdateResponse.CreateSuccessResponse(deletedCount));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(UpdateResponse.CreateErrorResponse(ex.Message));
             }
         }
     }

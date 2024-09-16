@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NotificationService.Models;
+using NotificationService.Models.Common;
 using NotificationService.Services;
 
 namespace NotificationService.Api.Controllers
@@ -32,12 +33,12 @@ namespace NotificationService.Api.Controllers
             try
             {
                 var messageId = await _messagesService.AddMessageAsync(request, ct);
-                return Ok(messageId);
+                return Ok(CreateResponse.CreateSuccessResponse(messageId));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return BadRequest(ex.Message);
+                return BadRequest(CreateResponse.CreateErrorResponse(ex.Message));
             }
         }
 
