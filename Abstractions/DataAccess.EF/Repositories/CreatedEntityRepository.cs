@@ -37,6 +37,10 @@ namespace Bets.Abstractions.DataAccess.EF.Repositories
         public virtual async Task AddRangeAsync(IEnumerable<T> entities)
         {
             _dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+            foreach (var entity in entities)
+            {
+                entity.CreatedDate = DateTime.Now;
+            }
             await _entitySet.AddRangeAsync(entities);
             await _dbContext.SaveChangesAsync();
             _dbContext.ChangeTracker.AutoDetectChangesEnabled = true;
