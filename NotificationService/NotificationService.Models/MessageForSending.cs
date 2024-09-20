@@ -2,12 +2,12 @@
 
 namespace NotificationService.Models
 {
-    public sealed class IncomingMessageResponse
+    public sealed class MessageForSending
     {
         /// <summary>
-        /// Дата создания
+        /// Идентификатор
         /// </summary>
-        public DateTime CreatedDate { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Идентификатор получателя сообщения (Bettors)
@@ -23,12 +23,6 @@ namespace NotificationService.Models
         /// Тема сообщения
         /// </summary>
         public string Subject { get; set; }
-
-        /// <summary>
-        /// Дата и время, до которого сообщение считается актуальным.
-        /// После этой даты отправлять сообщение конечному получателю не имеет смысла.
-        /// </summary>
-        public DateTime? ActualDate { get; set; }
 
         /// <summary>
         /// Состояние отправки сообщения

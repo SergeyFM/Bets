@@ -1,6 +1,6 @@
 ﻿using NotificationService.Models;
-using Bets.Abstractions.DataAccess.EF.Repositories;
 using NotificationService.Domain;
+using NotificationService.DataAccess.Repositories;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 
@@ -8,11 +8,11 @@ namespace NotificationService.Services
 {
     public class IncomingMessagesService
     {
-        private readonly CreatedEntityRepository<IncomingMessages> _repository;
+        private readonly IncomingMessagesRepository _repository;
         private readonly ILogger<IncomingMessagesService> _logger;
         private readonly IMapper _mapper;
 
-        public IncomingMessagesService(CreatedEntityRepository<IncomingMessages> incomingMessagesRepository
+        public IncomingMessagesService(IncomingMessagesRepository incomingMessagesRepository
             , ILogger<IncomingMessagesService> logger
             , IMapper mapper)
         {

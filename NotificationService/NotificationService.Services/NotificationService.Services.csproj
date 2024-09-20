@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NotificationService.DataAccess\NotificationService.DataAccess.csproj" />
     <ProjectReference Include="..\NotificationService.Domain\NotificationService.Domain.csproj" />
+    <ProjectReference Include="..\NotificationService.MailServices\NotificationService.MailServices.csproj" />
     <ProjectReference Include="..\NotificationService.Models\NotificationService.Models.csproj" />
   </ItemGroup>
 

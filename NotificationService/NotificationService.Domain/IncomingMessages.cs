@@ -33,5 +33,10 @@ namespace NotificationService.Domain
         /// Состояние отправки сообщения
         /// </summary>
         public SendingStates State { get; set; }
+
+        /// <summary>
+        /// Тема сообщения
+        /// </summary>
+        public string Subject { get; set; }
     }
 }

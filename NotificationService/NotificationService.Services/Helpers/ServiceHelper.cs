@@ -3,6 +3,7 @@ using Bets.Abstractions.DataAccess.EF.Repositories;
 using NotificationService.Domain;
 using NotificationService.Domain.Directories;
 using NotificationService.DataAccess.Repositories;
+using NotificationService.MailServices;
 
 namespace NotificationService.Services.Helpers
 {
@@ -17,7 +18,10 @@ namespace NotificationService.Services.Helpers
                 .AddScoped<LaterDeletedEntityRepository<Messengers>>()
                 .AddScoped<LaterDeletedEntityRepository<Bettors>>()
                 .AddScoped<LaterDeletedEntityRepository<MessageSources>>()
-                .AddScoped<BettorAddressRepository>();
+                .AddScoped<BettorAddressRepository>()
+                .AddScoped<IncomingMessagesRepository>()
+
+                .AddTransient<IMailService, MailService>(); ;
 
             return services;
         }

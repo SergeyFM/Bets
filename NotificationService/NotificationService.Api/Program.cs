@@ -1,4 +1,5 @@
 using NotificationService.Services.Helpers;
+using NotificationService.MailServices.Helper;
 using NotificationService.Api.Helpers;
 using NotificationService.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,9 @@ builder.Services.AddControllers();
 
 var config = builder.Configuration;
 
-builder.Services.AddNotificationServices()
+builder.Services
+    .AddNotificationServices()
+    .AddMailServices(config)
     .AddServices(config);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

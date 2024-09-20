@@ -77,6 +77,11 @@ namespace NotificationService.DataAccess.Repositories
             return updatedCount;
         }
 
+        /// <summary>
+        /// Обновляет непосредственно приоритет
+        /// </summary>
+        /// <param name="request">Данные для обновления</param>
+        /// <returns>Количество обновленных</returns>
         public async Task<int> UpdatePriorityAsync(BettorAddresses request)
         {
             var updatedCount = await _entitySet.Where(x => x.Id == request.Id && x.DeletedDate == null)
