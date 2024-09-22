@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
 
@@ -24,6 +25,9 @@
     </Reference>
     <Reference Include="Domain">
       <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="HostedService">
+      <HintPath>..\..\Abstractions\HostedService\bin\Debug\net8.0\HostedService.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -4,6 +4,7 @@ using NotificationService.Domain;
 using NotificationService.Domain.Directories;
 using NotificationService.DataAccess.Repositories;
 using NotificationService.MailServices;
+using NotificationService.Services.HostedServices;
 
 namespace NotificationService.Services.Helpers
 {
@@ -18,10 +19,12 @@ namespace NotificationService.Services.Helpers
                 .AddScoped<LaterDeletedEntityRepository<Messengers>>()
                 .AddScoped<LaterDeletedEntityRepository<Bettors>>()
                 .AddScoped<LaterDeletedEntityRepository<MessageSources>>()
-                .AddScoped<BettorAddressRepository>()
-                .AddScoped<IncomingMessagesRepository>()
+                .AddSingleton<BettorAddressRepository>()
+                .AddSingleton<IncomingMessagesRepository>()
 
-                .AddTransient<IMailService, MailService>(); ;
+                .AddTransient<IMailService, MailService>()
+                
+                .AddHostedService<SendingHostedService>(); 
 
             return services;
         }

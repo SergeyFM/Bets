@@ -14,14 +14,16 @@ namespace NotificationService.Api.Helpers
             if (string.IsNullOrEmpty(connectionString))
                 throw new Exception($"Connection string {connectionName} not defined");
 
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+            //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContextFactory<DatabaseContext>(options => options.UseSqlServer(connectionString));
+
             services
                 .AddScoped<IncomingMessagesService>()
                 .AddScoped<MessengersService>()
                 .AddScoped<BettorsService>()
                 .AddScoped<MessageSourcesService>()
                 .AddScoped<BettorAddressesService>()
-                .AddScoped<SendingService>()
+                .AddSingleton<SendingService>()
                 .AddScoped<DbContext, DatabaseContext>();
 
             return services;

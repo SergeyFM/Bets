@@ -6,11 +6,15 @@ namespace NotificationService.DataAccess.Repositories
 {
     public class BettorAddressRepository : LaterDeletedEntityRepository<BettorAddresses>
     {
-        /// <summary>
-        /// Конструктор
-        /// </summary>
-        /// <param name="context">Контекст хранилища</param>
-        public BettorAddressRepository(DbContext context) : base(context) { }
+        ///// <summary>
+        ///// Конструктор
+        ///// </summary>
+        ///// <param name="context">Контекст хранилища</param>
+        //public BettorAddressRepository(DbContext context) : base(context) { }
+
+
+
+        public BettorAddressRepository(IDbContextFactory<DatabaseContext> contextFactory) : base(contextFactory.CreateDbContext()) { }
 
         /// <summary>
         /// Получение сущности по идентификатору
