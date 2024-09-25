@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ServicesMocks\" />
+    <Folder Include="ServicesFakes\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
