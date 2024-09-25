@@ -1,6 +1,8 @@
 using System;
 using Bets.MainHost.Config.ini;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +13,9 @@ namespace Bets.MainHost;
 public class Program {
     public static void Main(string[] args) {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+        // Kestrel config
+        builder.ConfigureKestrelOptions();
 
         // Get config
         IConfiguration configuration = builder.ReadAppSettings();
@@ -36,7 +41,7 @@ public class Program {
             app.UseHsts();
         }
 
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
         app.UseStaticFiles();
 
         app.UseRouting();

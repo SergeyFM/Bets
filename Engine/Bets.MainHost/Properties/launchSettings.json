@@ -35,7 +35,21 @@
       },
       "publishAllPorts": true,
       "useSSL": true
+    },
+
+    "Container (Dockerfile)2": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://localhost:{ServicePort}",
+      "applicationUrl": "https://+:8081;http://+:8080",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://+:8081;http://+:8080"
+      },
+      "publishAllPorts": true,
+      "useSSL": false
     }
+
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
