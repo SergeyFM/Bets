@@ -24,6 +24,7 @@ public class Program {
         IServiceCollection services = builder.Services;
         services
             .AddConfOptions()
+            .AddServices()
             .AddControllersWithViews();
 
         WebApplication app = builder.Build();
