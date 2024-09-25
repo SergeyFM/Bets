@@ -6,6 +6,7 @@ services:
       dockerfile: UserServer/Dockerfile
     ports:
       - "5000:8080"
+      #- "5035:8081" 
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
@@ -25,3 +26,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 volumes:
   postgres_data:
+
+networks:
+  default:
+    name: "BestNetwoks"  

@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -12,8 +13,8 @@ using UserServer.Core.Interfaces;
 
 namespace UserServer.WebHost.Controllers.V1
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -49,6 +50,7 @@ namespace UserServer.WebHost.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPost("logout")]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Получаем Id текущего пользователя
@@ -75,6 +77,24 @@ namespace UserServer.WebHost.Controllers.V1
             {
                 return Unauthorized(new { Message = "Invalid refresh token." });
             }
+        }
+
+        [HttpGet("validateToken")]
+        [Authorize]
+        public IActionResult ValidateToken()
+        {
+            var roles = User.Claims
+                    .Where(c => c.Type == ClaimTypes.Role)
+                    .Select(c => c.Value)
+                    .ToList();
+
+            //var claims = User.Claims.ToList();
+            if (!roles.Any()) 
+            {
+                return Unauthorized();
+            }
+
+            return Ok(roles);
         }
 
     }

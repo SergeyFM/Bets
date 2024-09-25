@@ -1,0 +1,13 @@
+services:
+  testauthapigateway:
+    image: ${DOCKER_REGISTRY-}testauthapigateway
+    build:
+      context: .
+      dockerfile: TestAuthApiGateway/Dockerfile
+    ports:
+      - "5090:8080"
+      - "5095:8081" 
+
+networks:
+  default:
+    name: "BestNetwoks"  

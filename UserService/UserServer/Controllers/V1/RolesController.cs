@@ -6,8 +6,8 @@ using UserServer.Core.Interfaces;
 
 namespace UserServer.WebHost.Controllers.V1
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize(Roles = "Admin")]
     public class RolesController : ControllerBase
