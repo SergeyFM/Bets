@@ -6,11 +6,14 @@ services:
       dockerfile: UserServer/Dockerfile
     ports:
       - "5000:8080"
+      #- "5035:8081" 
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
       - ASPNETCORE_DBPASSWORD=${ASPNETCORE_DBPASSWORD}
       - ASPNETCORE_DBBASE=${ASPNETCORE_DBBASE}
+      - ASPNETCORE_REDIS_PASSWORD=${ASPNETCORE_REDIS_PASSWORD}
+      - ASPNETCORE_REDISPORT= ${ASPNETCORE_REDISPORT}
     depends_on:
     - postgresDBUsers  
   postgresDBUsers:
@@ -25,3 +28,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 volumes:
   postgres_data:
+
+networks:
+  default:
+    name: "BestNetwoks"  

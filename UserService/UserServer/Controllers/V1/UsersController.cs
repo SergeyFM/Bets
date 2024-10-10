@@ -2,25 +2,30 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using UserServer.Core.DTO;
 using UserServer.Core.Entities;
 using UserServer.Core.Interfaces;
+using UserServer.DataAccess.Extensions;
 
 namespace UserServer.WebHost.Controllers.V1
 {
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly UserManager<User> _userManager;
+        private readonly IDistributedCache _cache;
+        private const string DefaultPreficsCashe = ".Users.";
 
-        public UsersController(IUserService userService, UserManager<User> userManager)
+        public UsersController(IUserService userService, UserManager<User> userManager, IDistributedCache cache)
         {
             _userService = userService;
             _userManager = userManager;
+            _cache = cache;
         }
 
         /// <summary>
@@ -31,7 +36,10 @@ namespace UserServer.WebHost.Controllers.V1
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _userService.GetAllUsersAsync();
+            var cachKey = DefaultPreficsCashe + "All";
+            var users = await _cache.GetOrSerAsync(cachKey,
+                async () => await _userService.GetAllUsersAsync(),
+                TimeSpan.FromMinutes(30));
             return Ok(users);
         }
 
@@ -43,16 +51,26 @@ namespace UserServer.WebHost.Controllers.V1
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponceUserDto>> GetUserById(string id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var cachKey = DefaultPreficsCashe + "UserId." + id;
+            var user = await _cache.GetOrSerAsync(cachKey,
+                async () => await _userService.GetUserByIdAsync(id),
+                TimeSpan.FromMinutes(10)
+            );
+
             if (user == null) return NotFound("Пользователь не найден");
 
             return Ok(user);
         }
 
-        [HttpGet("userName={userName}")]
+        [HttpGet("userName/{userName}")]
         public async Task<ActionResult<ResponceUserDto>> GetUsersByUserName(string userName)
         {
-            var user = await _userService.GetUserByUserName(userName);
+            var cachKey = DefaultPreficsCashe + "UserName." + userName;
+            var user = await _cache.GetOrSerAsync(cachKey,
+                async () => await _userService.GetUserByUserName(userName),
+                TimeSpan.FromMinutes(10)
+            );
+
             if (user == null) return NotFound("Пользователь не найден");
 
             return Ok(user);

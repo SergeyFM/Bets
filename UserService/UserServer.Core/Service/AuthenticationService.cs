@@ -38,6 +38,7 @@ namespace UserServer.Core.Service
                 await _refreshTokenRepository.AddAsync(refreshToken);
                 return new AuthenticationResult { Token = token, RefreshToken = refreshToken.Token, Expiration = refreshToken.Expiration };
             }
+
             throw new InvalidCredentialsException();
         }
 
