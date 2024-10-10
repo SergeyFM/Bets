@@ -11,13 +11,6 @@ namespace TestAuthApiGateway
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            // Add services to the container.
-
-            //builder.WebHost.ConfigureKestrel(option =>
-            //{
-            //    option.ListenAnyIP(5001);
-
-            //});
 
             builder.Services.AddControllers();
 
@@ -26,24 +19,22 @@ namespace TestAuthApiGateway
 
             var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer( options =>
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
-                    ValidIssuer = jwtSettings.Issuer,
-                    ValidAudience = jwtSettings.Audience
-                };
-            });
+                    options.Authority = "http://userserver:8080/"; // Убедитесь, что это соответствует вашему IdentityServer
+                    options.RequireHttpsMetadata = false; // Отключите проверку HTTPS для разработки
+                    options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateAudience = false,
+                            ValidAudience = "api-gateway", // Убедитесь, что это соответствует настройкам в IdentityServer
+                            ValidateIssuer = true,
+                            ValidIssuer = "your_issuer",
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("12345678901234567890123456789012"))
+                    };
+                });
 
             // Добавление HttpClient для взаимодействия с другими микросервисами
             builder.Services.AddHttpClient();
@@ -78,12 +69,6 @@ namespace TestAuthApiGateway
 
             var app = builder.Build();
 
-
-
-            // Регистрация кастомного middleware
-            //app.UseMiddleware<RoleMiddleware>();
-            app.UseMiddleware<RoleMiddlewareValidateUserServer>();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -97,8 +82,9 @@ namespace TestAuthApiGateway
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
+            app.UseAuthentication(); // Включите аутентификацию
+            app.UseMiddleware<TestMiddleware>();
+            app.UseAuthorization();  // Включите авторизацию
 
 
             app.MapControllers();

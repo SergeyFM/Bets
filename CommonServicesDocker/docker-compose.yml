@@ -1,0 +1,17 @@
+services:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - '6379:${ASPNETCORE_REDISPORT}'
+    volumes:
+     - redis_data:/data
+    environment:
+      - REDIS_PASSWORD=${ASPNETCORE_REDIS_PASSWORD}
+    command: redis-server --requirepass ${ASPNETCORE_REDIS_PASSWORD}
+
+volumes:
+  redis_data:
+networks:
+  default:
+    name: "BestNetwoks"  

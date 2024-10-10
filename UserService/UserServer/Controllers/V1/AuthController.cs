@@ -1,15 +1,10 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Authentication;
 using System.Security.Claims;
-using System.Text;
 using UserServer.Core.DTO;
-using UserServer.Core.Entities;
 using UserServer.Core.Interfaces;
+using UserServer.Core.Exceptions;
 
 namespace UserServer.WebHost.Controllers.V1
 {
@@ -39,9 +34,13 @@ namespace UserServer.WebHost.Controllers.V1
                 
                 return Ok(result);
             }
-            catch (InvalidCredentialException)
+            catch (InvalidCredentialsException ice)
             {
                 return Unauthorized(new { Message = "Invalid email or password." });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { Message = "Unforeseen error" });
             }
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserServer.Core.Exceptions
 {
-    internal class InvalidCredentialsException : Exception
+    public class InvalidCredentialsException : Exception
     {
     }
 }
