@@ -28,6 +28,7 @@ namespace BetsService.Models
         /// </summary>
         public bool IsOver { get; set; }
 
+        //TODO: отмену события сделать отдельно
         /// <summary>
         /// Верно, если событие отменено
         /// </summary>

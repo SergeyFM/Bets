@@ -32,5 +32,10 @@ namespace BetsService.Models
         /// Верно, если событие отменено
         /// </summary>
         public bool IsCanceled { get; set; }
+
+        /// <summary>
+        /// Возможные исходы события
+        /// </summary>
+        public List<EventOutcomeResponse> EventOutcomes { get; set; } = [];
     }
 }

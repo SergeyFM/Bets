@@ -2,6 +2,9 @@
 
 namespace BetsService.Domain
 {
+    /// <summary>
+    /// События, на исходы которых можно делать ставки
+    /// </summary>
     public sealed class Events : LaterDeletedEntity
     {
         /// <summary>
@@ -28,5 +31,10 @@ namespace BetsService.Domain
         /// Верно, если событие отменено
         /// </summary>
         public bool IsCanceled { get; set; }
+
+        /// <summary>
+        /// Возможные исходы события
+        /// </summary>
+        public List<EventOutcomes> EventOutcomes { get; set; } = [];
     }
 }

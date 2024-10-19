@@ -8,66 +8,66 @@ using BetsService.Models;
 
 namespace BetsService.Services
 {
-    public class EventsService
+    public class EventOutcomesService
     {
-        private readonly LaterDeletedEntityRepository<Events> _repository;
-        private readonly ILogger<EventsService> _logger;
+        private readonly LaterDeletedEntityRepository<EventOutcomes> _repository;
+        private readonly ILogger<EventOutcomesService> _logger;
         private readonly IMapper _mapper;
 
-        public EventsService(LaterDeletedEntityRepository<Events> eventsRepository
-            , ILogger<EventsService> logger
+        public EventOutcomesService(LaterDeletedEntityRepository<EventOutcomes> EventOutcomesRepository
+            , ILogger<EventOutcomesService> logger
             , IMapper mapper)
         {
-            _repository = eventsRepository;
+            _repository = EventOutcomesRepository;
             _logger = logger;
             _mapper = mapper;
         }
 
-        public async Task<Guid> AddEventAsync(EventRequest request
+        public async Task<Guid> AddEventOutcomeAsync(EventOutcomeRequest request
             , CancellationToken ct)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[EventsService][AddEventAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[EventOutcomesService][AddEventOutcomeAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
             try
             {
-                var eventObj = _mapper.Map<Events>(request);
+                var eventObj = _mapper.Map<EventOutcomes>(request);
                 await _repository.AddAsync(eventObj);
 
                 return eventObj.Id;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[EventsService][AddEventAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[EventOutcomesService][AddEventOutcomeAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<EventResponse> GetEventAsync(Guid id)
+        public async Task<EventResponse> GetEventOutcomeAsync(Guid id)
         {
             try
             {
                 var response = await _repository.GetByIdAsync(id);
                 if (response == null)
                 {
-                    throw new NotFoundException($"Событие с идентификатором {id} не найдено.");
+                    throw new NotFoundException($"Исход с идентификатором {id} не найден.");
                 }
 
                 return _mapper.Map<EventResponse>(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[EventsService][GetEventAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[EventOutcomesService][GetEventOutcomeAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<List<EventResponse>> GetListEventsAsync()
+        public async Task<List<EventResponse>> GetListEventOutcomesAsync()
         {
             try
             {
@@ -77,18 +77,18 @@ namespace BetsService.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[EventsService][GetListEventsAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[EventOutcomesService][GetListEventOutcomesAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<EventResponse> UpdateEventAsync(EventUpdateRequest request)
+        public async Task<EventOutcomeResponse> UpdateEventOutcomeAsync(EventOutcomeUpdateRequest request)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[EventsService][UpdateEventAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[EventOutcomesService][UpdateEventOutcomeAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
@@ -97,34 +97,33 @@ namespace BetsService.Services
                 var response = await _repository.GetByIdAsync(request.Id);
                 if (response == null)
                 {
-                    throw new NotFoundException($"Событие с идентификатором {request.Id} не найдено.");
+                    throw new NotFoundException($"Исход с идентификатором {request.Id} не найден.");
                 }
 
-                response.BetsEndTime = request.BetsEndTime;
-                response.IsCanceled = request.IsCanceled;
-                response.IsOver = request.IsOver;
-                response.EventStartTime = request.EventStartTime;
+                response.CurrentOdd = request.CurrentOdd;
+                response.IsHappened = request.IsHappened;
+                response.BetsClosed = request.BetsClosed;
                 response.Description = request.Description;
                 response.ModifiedBy = request.ModifiedBy;
 
                 await _repository.UpdateAsync(response);
 
-                return _mapper.Map<EventResponse>(response);
+                return _mapper.Map<EventOutcomeResponse>(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[EventsService][UpdateEventAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[EventOutcomesService][UpdateEventOutcomeAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<int> DeleteEventAsync(DeleteRequest request)
+        public async Task<int> DeleteEventOutcomeAsync(DeleteRequest request)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[EventsService][DeleteEventAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[EventOutcomesService][DeleteEventOutcomeAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
@@ -136,18 +135,18 @@ namespace BetsService.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[EventsService][DeleteEventAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[EventOutcomesService][DeleteEventAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
 
-        public async Task<int> DeleteListEventsAsync(DeleteListRequest request)
+        public async Task<int> DeleteListEventOutcomesAsync(DeleteListRequest request)
         {
             if (request == null)
             {
                 var msg = "attempt to transmit a messenger without data";
                 var ex = new ArgumentNullException(nameof(request), msg);
-                _logger.LogError(ex, $"[EventsService][DeleteListEventsAsync] ArgumentNullException: {msg}");
+                _logger.LogError(ex, $"[EventOutcomesService][DeleteListEventOutcomesAsync] ArgumentNullException: {msg}");
                 throw ex;
             }
 
@@ -159,7 +158,7 @@ namespace BetsService.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"[EventsService][DeleteListEventsAsync] Exception: {ex.ToString()}");
+                _logger.LogError(ex, $"[EventOutcomesService][DeleteListEventOutcomesAsync] Exception: {ex.ToString()}");
                 throw new Exception(ex.ToString());
             }
         }
