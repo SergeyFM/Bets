@@ -2,7 +2,7 @@
 using NotificationService.Models;
 using Bets.Abstractions.Client;
 using System.Text.Json;
-using NotificationService.Models.Common;
+using Bets.Abstractions.Model;
 using Bets.Abstractions.Domain.Repositories.ModelRequests;
 
 namespace NotificationService.Client

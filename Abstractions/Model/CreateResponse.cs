@@ -1,10 +1,8 @@
 ﻿
-namespace NotificationService.Models.Common
+namespace Bets.Abstractions.Model
 {
     public sealed class CreateResponse
     {
-        //public CreateResponse() { }
-
         private CreateResponse(Guid id, bool isSuccess, string? errorMessage)
         {
             Id = id;

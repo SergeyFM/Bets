@@ -1,10 +1,8 @@
 ﻿
-namespace NotificationService.Models.Common
+namespace Bets.Abstractions.Model
 {
     public sealed class AddRangeResponse
     {
-        //public AddRangeResponse() { }
-
         private AddRangeResponse(IEnumerable<Guid> ids, bool isSuccess, string? errorMessage)
         {
             Ids = ids;

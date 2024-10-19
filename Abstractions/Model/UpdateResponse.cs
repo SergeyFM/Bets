@@ -1,17 +1,15 @@
 ﻿
-namespace NotificationService.Models.Common
+namespace Bets.Abstractions.Model
 {
     public sealed class UpdateResponse
     {
-        //public UpdateResponse() { }
-
         private UpdateResponse(int updateCount, bool isSuccess, string? errorMessage)
         {
             UpdateCount = updateCount;
             Result = new ResultResponse()
-            { 
+            {
                 IsSuccess = isSuccess,
-                ErrorMessage = errorMessage 
+                ErrorMessage = errorMessage
             };
         }
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NotificationService.Models;
-using NotificationService.Models.Common;
+using Bets.Abstractions.Model;
 using NotificationService.Services;
 
 namespace NotificationService.Api.Controllers

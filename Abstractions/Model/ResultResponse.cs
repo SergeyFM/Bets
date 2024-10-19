@@ -1,5 +1,4 @@
-﻿
-namespace NotificationService.Models.Common
+﻿namespace Bets.Abstractions.Model
 {
     public sealed class ResultResponse
     {

@@ -28,6 +28,9 @@
     <Reference Include="Domain">
       <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
     </Reference>
+    <Reference Include="Model">
+      <HintPath>..\..\Abstractions\Model\bin\Debug\net8.0\Model.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

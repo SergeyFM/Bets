@@ -3,7 +3,7 @@ using Bets.Abstractions.Domain.Repositories.ModelRequests;
 using NotificationService.Models;
 using NotificationService.Services;
 using NotificationService.Domain.Directories;
-using NotificationService.Models.Common;
+using Bets.Abstractions.Model;
 
 namespace NotificationService.Api.Controllers
 {
