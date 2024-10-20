@@ -1,12 +1,15 @@
 ﻿using Asp.Versioning;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 using UserServer.Core.DTO;
 using UserServer.Core.Entities;
 using UserServer.Core.Interfaces;
 using UserServer.DataAccess.Extensions;
+using UserServer.WebHost.Classes;
 
 namespace UserServer.WebHost.Controllers.V1
 {
@@ -14,18 +17,22 @@ namespace UserServer.WebHost.Controllers.V1
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseContoller
     {
         private readonly IUserService _userService;
         private readonly UserManager<User> _userManager;
         private readonly IDistributedCache _cache;
         private const string DefaultPreficsCashe = ".Users.";
+        private readonly IBus _bus;
 
-        public UsersController(IUserService userService, UserManager<User> userManager, IDistributedCache cache)
+        public UsersController(IUserService userService, UserManager<User> userManager,
+            IDistributedCache cache, ILogger<BaseContoller> logger, IBus bus)
+            : base(logger)
         {
             _userService = userService;
             _userManager = userManager;
             _cache = cache;
+            _bus = bus;
         }
 
         /// <summary>
@@ -40,6 +47,9 @@ namespace UserServer.WebHost.Controllers.V1
             var users = await _cache.GetOrSerAsync(cachKey,
                 async () => await _userService.GetAllUsersAsync(),
                 TimeSpan.FromMinutes(30));
+
+            LogInformationByUser("Запросил всех пользователей");
+
             return Ok(users);
         }
 
@@ -56,12 +66,19 @@ namespace UserServer.WebHost.Controllers.V1
                 async () => await _userService.GetUserByIdAsync(id),
                 TimeSpan.FromMinutes(10)
             );
+            
+            LogInformationByUser($"Запросил информацию по пользователю {id}");
 
             if (user == null) return NotFound("Пользователь не найден");
 
             return Ok(user);
         }
 
+        /// <summary>
+        /// Получить пользователя по имени
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         [HttpGet("userName/{userName}")]
         public async Task<ActionResult<ResponceUserDto>> GetUsersByUserName(string userName)
         {
@@ -70,6 +87,8 @@ namespace UserServer.WebHost.Controllers.V1
                 async () => await _userService.GetUserByUserName(userName),
                 TimeSpan.FromMinutes(10)
             );
+
+            LogInformationByUser($"Запросил информацию по пользователю {userName}");
 
             if (user == null) return NotFound("Пользователь не найден");
 
@@ -90,6 +109,13 @@ namespace UserServer.WebHost.Controllers.V1
             var result = await _userService.CreateUserAsync(user, password);
             if (result.Succeeded)
             {
+                LogInformationByUser($"Создал нового юзера {user.Email}", user.Email);
+                var responseUserDto = await _userService.GetUserByUserName(user.Email);
+                if (responseUserDto != null)
+                {
+                    await _bus.Publish(responseUserDto);
+                }
+
                 return CreatedAtAction(nameof(GetUsersByUserName), new { userName = user.UserName }, user);
             }
 
@@ -107,7 +133,9 @@ namespace UserServer.WebHost.Controllers.V1
         public async Task<IActionResult> UpdateUser(string id, UserDto user)
         {
             await _userService.UpdateUserAsync(user);
-            
+
+            LogInformationByUser($"Обновил информацию о пользователе {id}: {JsonSerializer.Serialize(user)}");
+
             return Ok();
         }
 
@@ -121,7 +149,9 @@ namespace UserServer.WebHost.Controllers.V1
         public async Task<IActionResult> DeleteUser(string id)
         {
             await _userService.DeleteUserAsync(id);
-            
+
+            LogInformationByUser($"Удалил пользователя: {id}");
+
             return NoContent();
         }
     }

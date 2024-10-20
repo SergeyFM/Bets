@@ -9,9 +9,47 @@ services:
     environment:
       - REDIS_PASSWORD=${ASPNETCORE_REDIS_PASSWORD}
     command: redis-server --requirepass ${ASPNETCORE_REDIS_PASSWORD}
+  elasticSearch:
+    image: elasticsearch:8.15.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - '9200:${ASPNETCORE_ELASTICPORT}'
+    volumes:
+     - elastic_data:/usr/share/elasticsearch/data 
+  kibana:
+    image: kibana:8.15.2
+    container_name: kibana
+    ports:
+      - '5601:${ASPNETCORE_KIBANAPORT}'
+    depends_on:
+      - elasticSearch
+    volumes:
+      - kibana_config:/usr/share/kibana/config
+      - kibana_data:/usr/share/kibana/data
+  rabbitMq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${ASPNETCORE_RABIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${ASPNETCORE_RABIT_PASSWORD}
+      RABBITMQ_DEFAULT_VHOST: ${ASPNETCORE_RABIT_VHOST}
+    ports:
+      - '5672:${ASPNETCORE_RABITPORT}'
+      - '15672:${ASPNETCORE_WEBRABITPORT}'
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
 
 volumes:
   redis_data:
+  elastic_data:
+  kibana_config:
+  kibana_data:
+  rabbitmq_data:
 networks:
   default:
     name: "BestNetwoks"  

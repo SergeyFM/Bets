@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using UserServer.Core.DTO;
 using UserServer.Core.Interfaces;
 using UserServer.DataAccess.Extensions;
+using UserServer.WebHost.Classes;
 
 namespace UserServer.WebHost.Controllers.V1
 {
@@ -12,13 +13,13 @@ namespace UserServer.WebHost.Controllers.V1
     [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize(Roles = "Admin")]
-    public class RolesController : ControllerBase
+    public class RolesController : BaseContoller
     {
         private readonly IRoleService _roleService;
         private readonly IDistributedCache _cache;
         private const string DefaultPreficsCashe = ".Roles.";
 
-        public RolesController(IRoleService roleService, IDistributedCache cache)
+        public RolesController(IRoleService roleService, IDistributedCache cache, ILogger<BaseContoller> logger) : base(logger)
         {
             _roleService = roleService;
             _cache = cache;
@@ -33,6 +34,8 @@ namespace UserServer.WebHost.Controllers.V1
                 async () => await _roleService.GetAllRolesAsync(), 
                 TimeSpan.FromMinutes(30));
 
+            LogInformationByUser("Запросил все роли");
+
             return Ok(roles);
         }
 
@@ -43,6 +46,8 @@ namespace UserServer.WebHost.Controllers.V1
             var cachKey = DefaultPreficsCashe + "User." + userId;
             var roles = await _cache.GetOrSerAsync(cachKey,
                 async () => await _roleService.GetUserRolesAsync(userId));
+
+            LogInformationByUser($"Запросил все роли пользователя с id = {userId}");
 
             return Ok(roles);
         }
@@ -57,6 +62,8 @@ namespace UserServer.WebHost.Controllers.V1
                 TimeSpan.FromMinutes(15)
             );
 
+            LogInformationByUser($"Запросил пользователей для роли = {roleName}");
+
             return Ok(users);
         }
 
@@ -64,6 +71,7 @@ namespace UserServer.WebHost.Controllers.V1
         public async Task<ActionResult<RoleDto>> CreateRole(string roleName)
         {
             var createdRole = await _roleService.CreateRoleAsync(roleName);
+            LogInformationByUser($"Создал роль = {roleName}");
             return CreatedAtAction(nameof(GetRoles), createdRole);
         }
 
@@ -73,10 +81,11 @@ namespace UserServer.WebHost.Controllers.V1
             var result = await _roleService.AddUserToRoleAsync(userId, role);
             if (result.Succeeded) 
             {
+                LogInformationByUser($"Назначил для {userId} роль - {role.Name}");
                 return NoContent();
             }
 
-            return BadRequest($"Failed to add user to role: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            return BadRequestHttp($"Failed to add user to role: {string.Join(", ", result.Errors.Select(e => e.Description))}");
         }
 
         [HttpDelete("{userId}&roles={roleName}")]
@@ -85,10 +94,11 @@ namespace UserServer.WebHost.Controllers.V1
             var result = await _roleService.RemoveUserFromRoleAsync(userId, role);
             if (result.Succeeded) 
             {
+                LogInformationByUser($"Удалил для {userId} роль - {role.Name}");
                 return NoContent();
             }
 
-            return BadRequest($"Failed to remove user from role: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            return BadRequestHttp($"Failed to remove user from role: {string.Join(", ", result.Errors.Select(e => e.Description))}");
         }
     }
 }
