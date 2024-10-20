@@ -1,18 +1,3 @@
-using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
-using UserServer.Core.Configurations;
-using UserServer.Core.Entities;
-using UserServer.Core.Interfaces;
-using UserServer.Core.Service;
-using UserServer.WebHost.Middleware;
-using UserServer.DataAccess.Data;
-using UserServer.DataAccess.Repositories;
-using UserServer.Core.Mappers;
 using UserServer.WebHost.Extensions;
 using UserServer.DataAccess.Extensions;
 
@@ -24,10 +9,16 @@ namespace UserServer
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddServices(builder.Configuration);
+            var configuration = builder.Configuration;
+
+            builder.Services.AddServices(configuration);
+
+            builder.AddLogger(configuration);
 
             var app = builder.Build();
 
+            app.AddHttpLogging<Program>();
+            
             await app.AddMigrationAndSeedDataAsync();
 
             if (app.Environment.IsDevelopment()) 

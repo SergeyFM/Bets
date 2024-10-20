@@ -23,6 +23,7 @@ namespace UserServer.WebHost.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDataSetvices(configuration);
+            services.AddRabitSetvices(configuration);
 
             #region Dependency
 

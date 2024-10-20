@@ -5,17 +5,18 @@ using System.Security.Claims;
 using UserServer.Core.DTO;
 using UserServer.Core.Interfaces;
 using UserServer.Core.Exceptions;
+using UserServer.WebHost.Classes;
 
 namespace UserServer.WebHost.Controllers.V1
 {
     [ApiVersion("1")]
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseContoller
     {
         private readonly IAuthenticationService _authenticationService;
 
-        public AuthController(IAuthenticationService authenticationService)
+        public AuthController(IAuthenticationService authenticationService, ILogger<BaseContoller> logger) : base(logger)
         {
             _authenticationService = authenticationService;
         }
@@ -31,7 +32,9 @@ namespace UserServer.WebHost.Controllers.V1
             try
             {
                 var result = await _authenticationService.LoginAsync(loginDto);
-                
+
+                LogInformationByUser("Авторизовался", loginDto.Email);
+
                 return Ok(result);
             }
             catch (InvalidCredentialsException ice)
@@ -40,7 +43,7 @@ namespace UserServer.WebHost.Controllers.V1
             }
             catch(Exception ex)
             {
-                return StatusCode(500, new { Message = "Unforeseen error" });
+                return IternalServerError(ex, new { Message = "Unforeseen error" });
             }
         }
 
@@ -53,6 +56,7 @@ namespace UserServer.WebHost.Controllers.V1
         public async Task<IActionResult> Logout()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Получаем Id текущего пользователя
+            LogInformationByUser("Разлогинился");
             await _authenticationService.LogoutAsync(userId);
 
             return NoContent();
@@ -69,7 +73,7 @@ namespace UserServer.WebHost.Controllers.V1
             try
             {
                 var result = await _authenticationService.RefreshTokenAsync(refreshToken);
-            
+                LogInformationByUser("Обновил токен");
                 return Ok(result);
             }
             catch (InvalidOperationException)
