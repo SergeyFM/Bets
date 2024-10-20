@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>d7420cd7-5c7d-4172-9474-dcfd1f00ba9e</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,10 +27,10 @@
 
   <ItemGroup>
     <Reference Include="Domain">
-      <HintPath>..\..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
+      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
     </Reference>
     <Reference Include="Model">
-      <HintPath>..\..\..\Abstractions\Model\bin\Debug\net8.0\Model.dll</HintPath>
+      <HintPath>..\..\Abstractions\Model\bin\Debug\net8.0\Model.dll</HintPath>
     </Reference>
   </ItemGroup>
 

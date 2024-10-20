@@ -1,0 +1,3 @@
+dotnet ef migrations add CreateDb --startup-project BetsService.Api --project BetsService.DataAccess --context DatabaseContext
+
+dotnet ef database update --startup-project BetsService.Api --project BetsService.DataAccess --context DatabaseContext

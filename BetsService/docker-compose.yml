@@ -1,0 +1,29 @@
+services:
+  promocode:
+    image: ${DOCKER_REGISTRY-}betsserviceapi
+    build:
+      context: .
+      dockerfile: BetsService.Api/Dockerfile
+    ports:
+      - "5142:8080"
+      - "7127:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
+      - ASPNETCORE_DBPASSWORD=${ASPNETCORE_DBPASSWORD}
+      - ASPNETCORE_DBBASE=${ASPNETCORE_DBBASE}
+    depends_on:
+    - betsDb  
+  betsDb:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${ASPNETCORE_DBBASE}
+      POSTGRES_USER: ${ASPNETCORE_DBUSER}
+      POSTGRES_PASSWORD: ${ASPNETCORE_DBPASSWORD}
+    ports:
+      - "5434:${ASPNETCORE_DBPORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
+

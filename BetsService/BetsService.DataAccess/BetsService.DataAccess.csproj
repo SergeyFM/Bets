@@ -19,4 +19,13 @@
     <ProjectReference Include="..\BetsService.Domain\BetsService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="DataAccess.EF">
+      <HintPath>..\..\Abstractions\DataAccess.EF\bin\Debug\net8.0\DataAccess.EF.dll</HintPath>
+    </Reference>
+    <Reference Include="Domain">
+      <HintPath>..\..\Abstractions\Domain\bin\Debug\net8.0\Domain.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
