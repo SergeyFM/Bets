@@ -26,6 +26,8 @@ services:
       - '5601:${ASPNETCORE_KIBANAPORT}'
     depends_on:
       - elasticSearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     volumes:
       - kibana_config:/usr/share/kibana/config
       - kibana_data:/usr/share/kibana/data
