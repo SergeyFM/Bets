@@ -30,7 +30,7 @@ namespace UserServer.WebHost.Classes
                 userName = User.FindFirstValue(ClaimTypes.Email);
             }
 
-            message = "Пользователь: {0} - " + message;
+            message = string.Format( "Пользователь: {0} - " + message, userName);
 
             logger?.LogInformation(message, userName);
         }
