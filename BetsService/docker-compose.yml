@@ -1,6 +1,6 @@
 services:
   promocode:
-    image: ${DOCKER_REGISTRY-}betsserviceapi
+    image: ${DOCKER_REGISTRY-}betsservice
     build:
       context: .
       dockerfile: BetsService.Api/Dockerfile
