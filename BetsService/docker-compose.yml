@@ -1,5 +1,5 @@
 services:
-  promocode:
+  betsService:
     image: ${DOCKER_REGISTRY-}betsservice
     build:
       context: .

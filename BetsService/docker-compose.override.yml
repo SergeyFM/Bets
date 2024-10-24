@@ -1,5 +1,5 @@
 services:
-  betsservice.api:
+  betsService:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
